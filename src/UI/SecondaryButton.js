@@ -1,0 +1,24 @@
+import styled from "styled-components";
+import theme from "./theme";
+const { colors, fontSizes } = theme;
+
+const SecondaryButton = styled.a`
+  display: inline-block;
+  background-color: none;
+  border: 1px solid ${colors.white}
+  color: ${colors.white};
+  font-size: ${fontSizes.xs};
+  padding: 11px 20px
+  border-radius: 40px;
+  font-weight: 400;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  &:hover,
+  &:focus {
+    background-color: ${colors.white};
+    color: ${colors.darkGrey};
+  }
+`;
+
+export default SecondaryButton;

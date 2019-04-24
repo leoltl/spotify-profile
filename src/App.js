@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import LoginPage from "./Components/LoginPage";
+import TopArtists from "./Components/TopArtist";
 
 const GlobalStyle = styled.div`
   width: 100vw;
@@ -15,7 +16,8 @@ const GlobalStyle = styled.div`
 function App() {
   return (
     <GlobalStyle>
-      <LoginPage />
+      {/* <LoginPage /> */}
+      <TopArtists />
     </GlobalStyle>
   );
 }
