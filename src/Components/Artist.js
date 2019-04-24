@@ -15,7 +15,7 @@ export default function Artist(props) {
   return (
     <ArtistWrapper>
       <img src={props.imgURL} />
-      <p>{props.artistName}</p>
+      <p>{props.name}</p>
     </ArtistWrapper>
   );
 }

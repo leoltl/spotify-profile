@@ -33,8 +33,8 @@ export default class TopTracks extends Component {
         {topArtists
           ? topArtists.map(artist => (
               <Artist
-                imgURL={artist.images[0].url}
-                artistName={artist.name}
+                imgURL={artist.images[2].url}
+                name={artist.name}
                 key={artist.id}
               />
             ))
