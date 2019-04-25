@@ -36,6 +36,7 @@ export default class TopTracks extends Component {
   }
 
   getTopTracks = () => {
+    const token = localStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/me/top/tracks?time_range=${
         this.state.time_range
@@ -44,7 +45,7 @@ export default class TopTracks extends Component {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_BEARER}`
+          Authorization: `Bearer ${token}`
         }
       }
     )

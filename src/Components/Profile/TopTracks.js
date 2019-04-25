@@ -3,19 +3,24 @@ import Track from "./Track";
 import { Link } from "react-router-dom";
 
 import ListHeader from "../../UI/ListHeader";
-import SecondaryButton from "../../UI/SecondaryButton";
+import Button from "../../UI/Button";
 import ListRail from "../../UI/ListRail";
 
 export default class TopTracks extends Component {
   state = { topTracks: [] };
   componentDidMount() {
+    this.getTopTracks();
+  }
+
+  getTopTracks = () => {
+    const token = localStorage.getItem("token");
     fetch(
       "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10",
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_BEARER}`
+          Authorization: `Bearer ${token}`
         }
       }
     )
@@ -23,16 +28,16 @@ export default class TopTracks extends Component {
       .then(data => {
         this.setState({ topTracks: data.items });
       });
-  }
+  };
   render() {
     let { topTracks } = this.state;
     return (
       <ListRail className="top-track">
         <ListHeader>
           <h2>Top Tracks of All Time</h2>
-          <SecondaryButton className="button">
+          <Button className="button">
             <Link to="/tracks">See more</Link>
-          </SecondaryButton>
+          </Button>
         </ListHeader>
         {topTracks
           ? topTracks.map(track => (

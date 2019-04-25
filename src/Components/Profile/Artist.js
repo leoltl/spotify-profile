@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const ArtistWrapper = styled.div`
   img {
@@ -15,10 +16,11 @@ const ArtistWrapper = styled.div`
 `;
 export default function Artist(props) {
   return (
-    <ArtistWrapper>
-      <img src={props.imgURL} alt="artist picture" />
-
-      <p>{props.name}</p>
-    </ArtistWrapper>
+    <Link to={`/artist/${props.artistId}`}>
+      <ArtistWrapper>
+        <img src={props.imgURL} alt="artist picture" />
+        <p>{props.name}</p>
+      </ArtistWrapper>
+    </Link>
   );
 }

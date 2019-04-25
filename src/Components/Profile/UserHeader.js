@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import SecondaryButton from "../../UI/SecondaryButton";
+import Button from "../../UI/Button";
 
 const Header = styled.div`
   text-align: center;
@@ -23,11 +23,12 @@ export default class UserHeader extends React.Component {
   };
 
   componentDidMount() {
+    const token = localStorage.getItem("token");
     fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.REACT_APP_BEARER}`
+        Authorization: `Bearer ${token}`
       }
     })
       .then(res => res.json())
@@ -60,7 +61,7 @@ export default class UserHeader extends React.Component {
           </div>
         </div> */}
         <br />
-        <SecondaryButton>Logout</SecondaryButton>
+        <Button>Logout</Button>
       </Header>
     );
   }

@@ -18,6 +18,10 @@ const NavBar = styled.nav`
     width: 70px;
     margin: 0 auto;
   }
+  a {
+    text-align: center;
+    margin-top: 25px;
+  }
 `;
 
 const NavIcon = styled.li`
@@ -49,7 +53,9 @@ export default class Navigation extends Component {
   render() {
     return (
       <NavBar>
-        <IconSpotify />
+        <Link to="/">
+          <IconSpotify />
+        </Link>
         <ul>
           <NavIcon>
             <Link to="/">

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Track from "../Profile/Track";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
-import Artist from "./Artist";
+import ArtistCard from "./ArtistCard";
 
 const TopArtistHeader = styled.div`
   display: flex;
@@ -39,6 +39,7 @@ export default class TopTracks extends Component {
   }
 
   getTopTracks = () => {
+    const token = localStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/me/top/artists?time_range=${
         this.state.time_range
@@ -47,7 +48,7 @@ export default class TopTracks extends Component {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.REACT_APP_BEARER}`
+          Authorization: `Bearer ${token}`
         }
       }
     )
@@ -66,7 +67,7 @@ export default class TopTracks extends Component {
     return (
       <MainContentWrapper>
         <TopArtistHeader>
-          <h2>Top Tracks</h2>
+          <h2>Top Artists</h2>
           <ul>
             <li onClick={() => this.selectTimeRange("long_term")}>All Time</li>
             <li onClick={() => this.selectTimeRange("medium_term")}>
@@ -80,10 +81,11 @@ export default class TopTracks extends Component {
         <TopArtistBody>
           {topArtists
             ? topArtists.map(artist => (
-                <Artist
+                <ArtistCard
                   imgURL={artist.images[0].url}
                   name={artist.name}
                   key={artist.id}
+                  artistId={artist.id}
                 />
               ))
             : null}
