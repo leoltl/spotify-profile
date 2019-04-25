@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 import LoginPage from "./Components/LoginPage";
-import Profile from "./Components/Profile/Profile";
+import Dashboard from "./Components/Dashboard";
 
 const GlobalStyle = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   padding: 0;
   font-family: "Montserrat", sans-serif;
   color: white;
@@ -16,7 +16,7 @@ const GlobalStyle = styled.div`
 function App() {
   return (
     <GlobalStyle>
-      <Profile />
+      <Dashboard />
     </GlobalStyle>
   );
 }

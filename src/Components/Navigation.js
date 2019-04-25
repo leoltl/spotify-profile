@@ -12,21 +12,36 @@ const NavBar = styled.nav`
   height: 100vh;
   width: 120px;
   flex-direction: column;
-  border: 1px solid red;
+  background: ${colors.navBlack};
+  svg {
+    fill: ${colors.offGreen};
+    width: 70px;
+    margin: 0 auto;
+  }
 `;
 
 const NavIcon = styled.li`
+  width: 100%;
   text-align: center;
   font-size:${fontSizes.sm}
-  margin: ${spacing.md};
-  
-  a {
-    color: ${colors.lightGrey};
-    text-decoration: none;
-  }
+  padding: ${spacing.md} 0;
+  transition: ease-in-out 0.3s;
   svg {
     fill: ${colors.lightGrey};
     height: 40px;
+  }
+  &:hover, &:focus {
+    background:${colors.lightestGrey};
+    a {
+      color: ${colors.offGreen};
+    }
+    svg {
+      fill: ${colors.offGreen};
+    }
+  }
+  a {
+    color: ${colors.lightGrey};
+    text-decoration: none;
   }
 `;
 
@@ -57,6 +72,7 @@ export default class Navigation extends Component {
               Top Tracks
             </Link>
           </NavIcon>
+          <div />
         </ul>
       </NavBar>
     );

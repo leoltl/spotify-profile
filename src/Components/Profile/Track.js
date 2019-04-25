@@ -42,7 +42,7 @@ const TrackContent = styled.div`
 export default function Track(props) {
   return (
     <TrackWrapper>
-      <img src={props.imgURL} alt="Artist picture" />
+      <img src={props.imgURL} alt="Artist" />
       <TrackContent>
         <div className="track-name">{props.name}</div>
         <div className="track-length">{props.length}</div>
