@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import ListHeader from "../UI/ListHeader";
-import SecondaryButton from "../UI/SecondaryButton";
 import Track from "./Track";
+
+import ListHeader from "../../UI/ListHeader";
+import SecondaryButton from "../../UI/SecondaryButton";
+import ListRail from "../../UI/ListRail";
 
 export default class TopTracks extends Component {
   state = { topTracks: [] };
@@ -12,21 +14,19 @@ export default class TopTracks extends Component {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization:
-            "Bearer BQBuWxjXjeBSkw-3v1QuSknbUQE14p4l-PXjnAotASd99FLaG3UzHR-6Lj47-hHxsO0HMkEUKhP9jDTKgmb2QoNhcokKWAxnml-wuNRBmfEXq_4607xu_Rb1oXPfZPI1UpPAx8CQeVZDEokgDnpBcTRVx8tbNPgMxLLhFKdqiLT-18Zaf7GamJGnncsBnF2UMtrSIm08JQGewTiFZCWJPBU0ZkDs9h9tPz_lKq9rcdkpnOrbHsdOdeBFrqpoAlbsdlQsGxM_S5nkLi4"
+          Authorization: `Bearer ${process.env.REACT_APP_BEARER}`
         }
       }
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ topTracks: data.items });
       });
   }
   render() {
     let { topTracks } = this.state;
     return (
-      <>
+      <ListRail className="top-track">
         <ListHeader>
           <h2>Top Tracks of All Time</h2>
           <SecondaryButton className="button">See more</SecondaryButton>
@@ -43,7 +43,7 @@ export default class TopTracks extends Component {
               />
             ))
           : null}
-      </>
+      </ListRail>
     );
   }
 }
