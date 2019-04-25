@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 import Track from "../Profile/Track";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
+import Artist from "./Artist";
 
-const TopTrackHeader = styled.div`
+const TopArtistHeader = styled.div`
   display: flex;
   width: 70%;
   margin: 0 auto;
@@ -25,9 +26,11 @@ const TopTrackHeader = styled.div`
   }
 `;
 
-const TopTrackBody = styled.div`
+const TopArtistBody = styled.div`
   width: 70%;
   margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
 `;
 export default class TopTracks extends Component {
   state = { time_range: "long_term" };
@@ -37,9 +40,9 @@ export default class TopTracks extends Component {
 
   getTopTracks = () => {
     fetch(
-      `https://api.spotify.com/v1/me/top/tracks?time_range=${
+      `https://api.spotify.com/v1/me/top/artists?time_range=${
         this.state.time_range
-      }&limit=40`,
+      }&limit=30`,
       {
         method: "GET",
         headers: {
@@ -50,7 +53,7 @@ export default class TopTracks extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        this.setState({ topTracks: data.items });
+        this.setState({ topArtists: data.items });
       });
   };
   selectTimeRange = timerange => {
@@ -58,10 +61,11 @@ export default class TopTracks extends Component {
   };
 
   render() {
-    let { topTracks } = this.state;
+    console.log(this.state);
+    let { topArtists } = this.state;
     return (
       <MainContentWrapper>
-        <TopTrackHeader>
+        <TopArtistHeader>
           <h2>Top Tracks</h2>
           <ul>
             <li onClick={() => this.selectTimeRange("long_term")}>All Time</li>
@@ -72,21 +76,18 @@ export default class TopTracks extends Component {
               Last 4 Weeks
             </li>
           </ul>
-        </TopTrackHeader>
-        <TopTrackBody>
-          {topTracks
-            ? topTracks.map(track => (
-                <Track
-                  imgURL={track.album.images[1].url}
-                  name={track.name}
-                  artist={track.artists[0].name}
-                  album={track.album.name}
-                  length={formatDuration(track.duration_ms)}
-                  key={track.id}
+        </TopArtistHeader>
+        <TopArtistBody>
+          {topArtists
+            ? topArtists.map(artist => (
+                <Artist
+                  imgURL={artist.images[0].url}
+                  name={artist.name}
+                  key={artist.id}
                 />
               ))
             : null}
-        </TopTrackBody>
+        </TopArtistBody>
       </MainContentWrapper>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Track from "./Track";
+import { Link } from "react-router-dom";
 
 import ListHeader from "../../UI/ListHeader";
 import SecondaryButton from "../../UI/SecondaryButton";
@@ -29,7 +30,9 @@ export default class TopTracks extends Component {
       <ListRail className="top-track">
         <ListHeader>
           <h2>Top Tracks of All Time</h2>
-          <SecondaryButton className="button">See more</SecondaryButton>
+          <SecondaryButton className="button">
+            <Link to="/tracks">See more</Link>
+          </SecondaryButton>
         </ListHeader>
         {topTracks
           ? topTracks.map(track => (

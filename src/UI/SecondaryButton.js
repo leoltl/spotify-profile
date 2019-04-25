@@ -17,8 +17,16 @@ const SecondaryButton = styled.button`
   cursor: pointer;
   &:hover,
   &:focus {
-    background-color: ${colors.white};
     color: ${colors.darkGrey};
+    background-color: ${colors.white};
+  }
+  a {
+    color: ${colors.white};
+    font-size: ${fontSizes.xs};
+    &:hover,
+    &:focus {
+      color: ${colors.darkGrey};
+    }
   }
 `;
 

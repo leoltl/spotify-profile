@@ -4,6 +4,7 @@ import Artist from "../Artist";
 import SecondaryButton from "../../UI/SecondaryButton";
 import ListHeader from "../../UI/ListHeader";
 import ListRail from "../../UI/ListRail";
+import { Link } from "react-router-dom";
 
 export default class TopTracks extends Component {
   state = { topArtists: [] };
@@ -27,7 +28,10 @@ export default class TopTracks extends Component {
       <ListRail className="top-artist">
         <ListHeader>
           <h2>Top Artists of All Time</h2>
-          <SecondaryButton className="button">See more</SecondaryButton>
+
+          <SecondaryButton className="button">
+            <Link to="/artists">See more</Link>
+          </SecondaryButton>
         </ListHeader>
         {topArtists
           ? topArtists.map(artist => (
