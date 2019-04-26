@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../UI/theme";
+import { Link } from "react-router-dom";
 
 const { colors, fontSizes, spacing } = theme;
 
@@ -41,16 +42,18 @@ const TrackContent = styled.div`
 
 export default function Track(props) {
   return (
-    <TrackWrapper>
-      <img src={props.imgURL} alt="Artist" />
-      <TrackContent>
-        <div className="track-name">{props.name}</div>
-        <div className="track-length">{props.length}</div>
+    <Link to={`/track/${props.trackId}`}>
+      <TrackWrapper>
+        <img src={props.imgURL} alt="Artist" />
+        <TrackContent>
+          <div className="track-name">{props.name}</div>
+          <div className="track-length">{props.length}</div>
 
-        <div className="track-album">
-          {props.artist} - {props.album}
-        </div>
-      </TrackContent>
-    </TrackWrapper>
+          <div className="track-album">
+            {props.artist} - {props.album}
+          </div>
+        </TrackContent>
+      </TrackWrapper>
+    </Link>
   );
 }

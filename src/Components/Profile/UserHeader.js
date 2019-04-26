@@ -23,7 +23,7 @@ export default class UserHeader extends React.Component {
   };
 
   componentDidMount() {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     fetch("https://api.spotify.com/v1/me", {
       method: "GET",
       headers: {
@@ -33,7 +33,6 @@ export default class UserHeader extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({
           displayURL: data.images[0].url,
           product: data.product,
@@ -60,8 +59,6 @@ export default class UserHeader extends React.Component {
             0<span>playlists</span>
           </div>
         </div> */}
-        <br />
-        <Button>Logout</Button>
       </Header>
     );
   }

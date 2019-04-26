@@ -9,7 +9,7 @@ const { colors, fontSizes } = theme;
 export default class InvArtistView extends Component {
   state = { Artist: null };
   getTopTracks = artistId => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
       method: "GET",
       headers: {

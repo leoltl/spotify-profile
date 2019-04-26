@@ -18,7 +18,7 @@ export default function Artist(props) {
   return (
     <Link to={`/artist/${props.artistId}`}>
       <ArtistWrapper>
-        <img src={props.imgURL} alt="artist picture" />
+        <img src={props.imgURL} alt="artist" />
         <p>{props.name}</p>
       </ArtistWrapper>
     </Link>

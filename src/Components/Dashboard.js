@@ -6,6 +6,7 @@ import TopTrack from "./DetailTopViews/TopTrack";
 import TopArtists from "./DetailTopViews/TopArtists";
 import Profile from "./Profile/Profile";
 import InvArtistView from "./IndividualViews/InvArtistView";
+import InvTrackView from "./IndividualViews/InvTrackView";
 
 export default class Dashboard extends Component {
   render() {
@@ -18,6 +19,7 @@ export default class Dashboard extends Component {
             <Route exact path="/tracks" component={TopTrack} />
             <Route exact path="/artists" component={TopArtists} />
             <Route path="/artist/:id" component={InvArtistView} />
+            <Route path="/track/:id" component={InvTrackView} />
           </Switch>
         </Router>
       </>

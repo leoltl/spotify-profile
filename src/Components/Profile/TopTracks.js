@@ -13,7 +13,7 @@ export default class TopTracks extends Component {
   }
 
   getTopTracks = () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     fetch(
       "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10",
       {
@@ -48,6 +48,7 @@ export default class TopTracks extends Component {
                 album={track.album.name}
                 length={formatDuration(track.duration_ms)}
                 key={track.id}
+                trackId={track.id}
               />
             ))
           : null}

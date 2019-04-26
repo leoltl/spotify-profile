@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 import LoginPage from "./Components/LoginPage";
 import Dashboard from "./Components/Dashboard";
-import { thisTypeAnnotation } from "@babel/types";
 
 const GlobalStyle = styled.div`
   width: 100%;
@@ -15,19 +14,19 @@ const GlobalStyle = styled.div`
 `;
 
 class App extends React.Component {
-  state = { token: null };
+  state = { token: true };
   componentDidMount() {
     let token = this.getHashParams(window.location.hash);
     if (token.access_token) {
+      sessionStorage.setItem("token", token.access_token);
+      sessionStorage.setItem("expires", token.expires_in);
       localStorage.setItem("token", token.access_token);
       localStorage.setItem("expires", token.expires_in);
-
       this.setState({ token: token });
     }
   }
 
   render() {
-    console.log(this.state.token);
     return (
       <GlobalStyle>
         {this.state.token ? <Dashboard /> : <LoginPage />}

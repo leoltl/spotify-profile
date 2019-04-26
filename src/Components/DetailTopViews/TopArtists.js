@@ -39,7 +39,7 @@ export default class TopTracks extends Component {
   }
 
   getTopTracks = () => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/me/top/artists?time_range=${
         this.state.time_range
