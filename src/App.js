@@ -14,7 +14,7 @@ const GlobalStyle = styled.div`
 `;
 
 class App extends React.Component {
-  state = { token: true };
+  state = { token: false };
   componentDidMount() {
     let token = this.getHashParams(window.location.hash);
     if (token.access_token) {

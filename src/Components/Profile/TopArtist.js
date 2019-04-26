@@ -14,7 +14,6 @@ export default class TopArtist extends Component {
 
   getTopArtist = () => {
     const token = sessionStorage.getItem("token");
-    console.log(token);
     fetch("https://api.spotify.com/v1/me/top/artists?limit=10", {
       method: "GET",
       headers: {

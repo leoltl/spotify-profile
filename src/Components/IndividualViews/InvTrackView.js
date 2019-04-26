@@ -19,7 +19,6 @@ export default class InvTrackView extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ TrackFeature: data });
       });
   };
@@ -37,7 +36,6 @@ export default class InvTrackView extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ TrackInfo: data });
       });
   };
@@ -55,7 +53,6 @@ export default class InvTrackView extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         this.setState({ TrackAnalysis: data });
       });
   };
@@ -80,7 +77,11 @@ export default class InvTrackView extends Component {
                 <p>
                   {TrackInfo.album.name} - {TrackInfo.album.release_date}
                 </p>
-                <a href={TrackInfo.external_urls.spotify} target="_blank">
+                <a
+                  href={TrackInfo.external_urls.spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button primary>Play on Spotify</Button>
                 </a>
               </div>
@@ -138,18 +139,21 @@ const TrackAnalysisWrapper = styled.div`
   & p {
     text-transform: Capitalize;
     font-size: 12px;
+    color: ${colors.lightGrey};
   }
 `;
 
 const TrackInfoWrapper = styled.div`
-  margin: 25px;
+width: 70%
+  margin: 25px auto;
+  margin-bottom: 100px;
   display: flex;
   img {
     width: 250px;
     height: 250px;
   }
   & > div {
-    margin-left: 100px;
+    margin-left: 200px;
   }
 
   h1 {

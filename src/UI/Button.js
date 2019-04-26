@@ -54,6 +54,17 @@ const Button = styled.button`
         background-color: ${colors.offGreen};
       }
     `}
+
+    ${props =>
+      props.danger &&
+      css`
+        display: inline-block;
+        &:hover,
+        &:focus {
+          border-color: red;
+          background-color: red;
+        }
+      `}
 `;
 
 export default Button;

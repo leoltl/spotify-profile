@@ -3,18 +3,18 @@ import styled from "styled-components";
 import theme from "../../UI/theme";
 import { Link } from "react-router-dom";
 
-const { colors, fontSizes, spacing } = theme;
+const { colors, fontSizes } = theme;
 
 const TrackWrapper = styled.div`
   img {
     min-width: 50px;
     max-width: 50px;
     height: 50px;
-    border-radius: 50%;
     margin: 0.25rem 1rem;
   }
   display: flex;
   align-items: center;
+  margin: 5px 0;
 `;
 const TrackContent = styled.div`
   display: grid;

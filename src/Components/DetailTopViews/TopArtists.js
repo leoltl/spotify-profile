@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import Track from "../Profile/Track";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import ArtistCard from "./ArtistCard";
 
@@ -32,13 +31,13 @@ const TopArtistBody = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
-export default class TopTracks extends Component {
+export default class TopArtists extends Component {
   state = { time_range: "long_term" };
   componentDidMount() {
-    this.getTopTracks();
+    this.getTopArtists();
   }
 
-  getTopTracks = () => {
+  getTopArtists = () => {
     const token = sessionStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/me/top/artists?time_range=${
@@ -58,11 +57,10 @@ export default class TopTracks extends Component {
       });
   };
   selectTimeRange = timerange => {
-    this.setState({ time_range: timerange }, () => this.getTopTracks());
+    this.setState({ time_range: timerange }, () => this.getTopArtists());
   };
 
   render() {
-    console.log(this.state);
     let { topArtists } = this.state;
     return (
       <MainContentWrapper>
@@ -93,10 +91,4 @@ export default class TopTracks extends Component {
       </MainContentWrapper>
     );
   }
-}
-
-function formatDuration(millis) {
-  const minutes = Math.floor(millis / 60000);
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }

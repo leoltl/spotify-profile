@@ -13,6 +13,7 @@ const ArtistWrapper = styled.div`
   display: flex;
   align-items: center;
   font-weight: 400;
+  margin: 5px 0;
 `;
 export default function Artist(props) {
   return (
