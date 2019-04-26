@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Track from "../Profile/Track";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 
+import { generateReqHeader } from "../../utils";
+
 const TopTrackHeader = styled.div`
   display: flex;
   width: 70%;
@@ -36,18 +38,11 @@ export default class TopTracks extends Component {
   }
 
   getTopTracks = () => {
-    const token = sessionStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/me/top/tracks?time_range=${
         this.state.time_range
       }&limit=40`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      }
+      generateReqHeader("GET")
     )
       .then(res => res.json())
       .then(data => {

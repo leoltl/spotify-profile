@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import ArtistCard from "./ArtistCard";
 
+import { generateReqHeader } from "../../utils";
+
 const TopArtistHeader = styled.div`
   display: flex;
   width: 70%;
@@ -38,18 +40,11 @@ export default class TopArtists extends Component {
   }
 
   getTopArtists = () => {
-    const token = sessionStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/me/top/artists?time_range=${
         this.state.time_range
       }&limit=30`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      }
+      generateReqHeader("GET")
     )
       .then(res => res.json())
       .then(data => {

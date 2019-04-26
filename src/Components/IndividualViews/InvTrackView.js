@@ -4,19 +4,17 @@ import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import Button from "../../UI/Button";
 import theme from "../../UI/theme";
 
+import { generateReqHeader } from "../../utils";
+
 const { colors, fontSizes } = theme;
 
 export default class InvTrackView extends Component {
   state = { TrackFeature: {}, TrackInfo: {}, TrackAnalysis: {} };
   getTrackFeature = trackId => {
-    const token = sessionStorage.getItem("token");
-    fetch(`https://api.spotify.com/v1/audio-features/${trackId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
+    fetch(
+      `https://api.spotify.com/v1/audio-features/${trackId}`,
+      generateReqHeader("GET")
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ TrackFeature: data });
@@ -24,16 +22,10 @@ export default class InvTrackView extends Component {
   };
 
   getTrackInfo = trackId => {
-    const token = sessionStorage.getItem("token")
-      ? sessionStorage.getItem("token")
-      : localStorage.getItem("token");
-    fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
+    fetch(
+      `https://api.spotify.com/v1/tracks/${trackId}`,
+      generateReqHeader("GET")
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ TrackInfo: data });
@@ -41,16 +33,10 @@ export default class InvTrackView extends Component {
   };
 
   getTrackAnalysis = trackId => {
-    const token = sessionStorage.getItem("token")
-      ? sessionStorage.getItem("token")
-      : localStorage.getItem("token");
-    fetch(`https://api.spotify.com/v1/audio-analysis/${trackId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
+    fetch(
+      `https://api.spotify.com/v1/audio-analysis/${trackId}`,
+      generateReqHeader("GET")
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ TrackAnalysis: data });

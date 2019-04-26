@@ -4,82 +4,40 @@ import Button from "../../UI/Button";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import theme from "../../UI/theme";
 import Track from "../Profile/Track";
+import { generateReqHeader } from "../../utils";
 
 const { colors, fontSizes } = theme;
 
 export default class InvArtistView extends Component {
-  state = { Artist: null, artistsTopTrack: null, Followed: false };
+  constructor() {
+    super();
+    this.state = { Artist: null, artistsTopTrack: null, Followed: false };
+  }
+
   getArtist = artistId => {
-    const token = sessionStorage.getItem("token");
-    fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
+    fetch(
+      `https://api.spotify.com/v1/artists/${artistId}`,
+      generateReqHeader("GET")
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ Artist: data });
       });
   };
 
-  checkFollowArtist = artistId => {
-    const token = sessionStorage.getItem("token");
+  getFollowStatus = artistId => {
     fetch(
       `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      }
+      generateReqHeader("GET")
     )
       .then(res => res.json())
       .then(data => this.setState({ Followed: data[0] }));
   };
 
-  followArtist = artistId => {
-    const token = sessionStorage.getItem("token");
-    if (this.state.Followed) {
-      fetch(
-        `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-      this.setState({ Followed: false });
-    } else {
-      fetch(
-        `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
-      this.setState({ Followed: true });
-    }
-  };
-
   getArtistTopTracks = artistId => {
-    const token = sessionStorage.getItem("token");
     fetch(
       `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=CA`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      }
+      generateReqHeader("GET")
     )
       .then(res => res.json())
       .then(data => {
@@ -87,10 +45,19 @@ export default class InvArtistView extends Component {
       });
   };
 
+  followArtist = artistId => {
+    let reqMethod = this.state.Followed ? "DELETE" : "PUT";
+    fetch(
+      `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
+      generateReqHeader(reqMethod)
+    ).then(this.setState({ Followed: !this.state.Followed }));
+  };
+
   componentDidMount() {
-    this.getArtist(this.props.match.params.id);
-    this.getArtistTopTracks(this.props.match.params.id);
-    this.checkFollowArtist(this.props.match.params.id);
+    const id = this.props.match.params.id;
+    this.getArtist(id);
+    this.getArtistTopTracks(id);
+    this.getFollowStatus(id);
   }
 
   render() {
@@ -104,7 +71,9 @@ export default class InvArtistView extends Component {
             <h3>{Artist.name}</h3>
             <ArtistInfo>
               <div className="followers">
-                <div className="dynamic">{Artist.followers.total}</div>
+                <div className="dynamic">
+                  {formatComma(Artist.followers.total)}
+                </div>
                 <p>followers</p>
               </div>
               <div className="genre">
@@ -204,3 +173,6 @@ const formatDuration = millis => {
   const seconds = ((millis % 60000) / 1000).toFixed(0);
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
+
+const formatComma = number =>
+  number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

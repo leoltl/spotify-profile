@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const ArtistCard = styled.div`
+const Artistcard = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -18,10 +18,10 @@ const ArtistCard = styled.div`
 export default function Artist(props) {
   return (
     <Link to={`/artist/${props.artistId}`}>
-      <ArtistCard>
+      <Artistcard>
         <img src={props.imgURL} alt="" />
         {props.name}
-      </ArtistCard>
+      </Artistcard>
     </Link>
   );
 }

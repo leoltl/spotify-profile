@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { generateReqHeader } from "../../utils";
 
 const Header = styled.div`
   text-align: center;
@@ -21,15 +22,8 @@ export default class UserHeader extends React.Component {
     followers: ""
   };
 
-  componentDidMount() {
-    const token = sessionStorage.getItem("token");
-    fetch("https://api.spotify.com/v1/me", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
+  getUserProfile = () => {
+    fetch("https://api.spotify.com/v1/me", generateReqHeader("GET"))
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -39,6 +33,10 @@ export default class UserHeader extends React.Component {
           username: data.id
         });
       });
+  };
+
+  componentDidMount() {
+    this.getUserProfile();
   }
   render() {
     return (

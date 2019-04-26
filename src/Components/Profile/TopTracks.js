@@ -6,29 +6,26 @@ import ListHeader from "../../UI/ListHeader";
 import Button from "../../UI/Button";
 import ListRail from "../../UI/ListRail";
 
+import { generateReqHeader } from "../../utils";
+
 export default class TopTracks extends Component {
   state = { topTracks: [] };
+
   componentDidMount() {
     this.getTopTracks();
   }
 
   getTopTracks = () => {
-    const token = sessionStorage.getItem("token");
     fetch(
       "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        }
-      }
+      generateReqHeader("GET")
     )
       .then(res => res.json())
       .then(data => {
         this.setState({ topTracks: data.items });
       });
   };
+
   render() {
     let { topTracks } = this.state;
     return (

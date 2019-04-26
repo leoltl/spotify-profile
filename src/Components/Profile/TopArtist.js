@@ -6,6 +6,8 @@ import ListHeader from "../../UI/ListHeader";
 import ListRail from "../../UI/ListRail";
 import { Link } from "react-router-dom";
 
+import { generateReqHeader } from "../../utils";
+
 export default class TopArtist extends Component {
   state = { topArtists: [] };
   componentDidMount() {
@@ -13,14 +15,10 @@ export default class TopArtist extends Component {
   }
 
   getTopArtist = () => {
-    const token = sessionStorage.getItem("token");
-    fetch("https://api.spotify.com/v1/me/top/artists?limit=10", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    })
+    fetch(
+      "https://api.spotify.com/v1/me/top/artists?limit=10",
+      generateReqHeader("GET")
+    )
       .then(res => res.json())
       .then(data => {
         this.setState({ topArtists: data.items });
