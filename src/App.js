@@ -7,14 +7,14 @@ import Dashboard from "./Components/Dashboard";
 const GlobalStyle = styled.div`
   width: 100%;
   height: 100%;
-  padding: 0;
+  padding: 0 0 70px 0;
   font-family: "Montserrat", sans-serif;
   color: white;
   background-color: rgb(25, 20, 20);
 `;
 
 class App extends React.Component {
-  state = { token: true };
+  state = { token: false };
   componentDidMount() {
     let token = this.getHashParams(window.location.hash);
     if (token.access_token) {

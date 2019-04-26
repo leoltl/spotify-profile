@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, withRouter, NavLink } from "react-router-dom";
 import { IconSpotify, IconMicrophone, IconUser, IconMusic } from "./icons";
 import theme from "../UI/theme";
 
@@ -22,10 +22,23 @@ const NavBar = styled.nav`
     box-sizing: border-box;
     display: flex;
     justify-content: space-around;
+    & > * {
+      flex-basis: 33%;
+    }
   }
   .home {
     width: 0px;
     visibility: hidden;
+  }
+
+  .active {
+    a {
+      color: ${colors.offGreen};
+    }
+    svg {
+      fill: ${colors.offGreen};
+    }
+    border-bottom: 5px solid ${colors.green};
   }
 
   @media screen and (min-width: 1000px) {
@@ -51,11 +64,16 @@ const NavBar = styled.nav`
       padding: 0;
       flex-direction: column;
     }
+    .active {
+      box-sizing: border-box;
+      border-left: 5px solid ${colors.green};
+      padding-left: -5px
+      border-bottom: none;
+    }
   }
 `;
 
 const NavIcon = styled.li`
-  width: calc(100%/3);
   font-size: 12px;
   padding: 5px;
   margin: auto 10px;
@@ -94,38 +112,40 @@ const NavIcon = styled.li`
   
 `;
 
-export default class Navigation extends Component {
+class Navigation extends Component {
   render() {
+    console.log(this.props.location.pathname);
     return (
       <NavBar>
         <Link to="/" className="home">
           <IconSpotify />
         </Link>
         <ul>
-          <NavIcon>
-            <Link to="/">
+          <NavLink exact to="/" activeClassName="active">
+            <NavIcon>
               <IconUser />
               <br />
               Profile
-            </Link>
-          </NavIcon>
-          <NavIcon>
-            <Link to="/artists">
+            </NavIcon>
+          </NavLink>
+          <NavLink to="/artists" activeClassName="active">
+            <NavIcon>
               <IconMicrophone />
               <br />
               Top Artists
-            </Link>
-          </NavIcon>
-          <NavIcon>
-            <Link to="/tracks">
+            </NavIcon>
+          </NavLink>
+          <NavLink to="/tracks" activeClassName="active">
+            <NavIcon>
               <IconMusic />
               <br />
               Top Tracks
-            </Link>
-          </NavIcon>
-          <div />
+            </NavIcon>
+          </NavLink>
         </ul>
       </NavBar>
     );
   }
 }
+
+export default withRouter(Navigation);

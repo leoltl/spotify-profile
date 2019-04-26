@@ -29,7 +29,7 @@ export default class LoginPage extends Component {
       <Login>
         <h1>Spotify Profile</h1>
         <a href={url}>
-          <Button primary>Log in To Spotify</Button>
+          <Button primary>Grant one-time access to Spotify</Button>
         </a>
       </Login>
     );

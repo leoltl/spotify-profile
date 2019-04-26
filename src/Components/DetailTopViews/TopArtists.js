@@ -39,9 +39,9 @@ const TopArtistBody = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   @media screen and (min-width: 1000px) {
+    display: flex;
     width: 70%;
     margin: 0 auto;
-    display: flex;
     flex-wrap: wrap;
   }
 `;
