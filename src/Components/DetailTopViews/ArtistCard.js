@@ -4,14 +4,24 @@ import { Link } from "react-router-dom";
 
 const Artistcard = styled.div`
   display: flex;
+  padding: 10px;
+  font-weight: 500;
   flex-direction: column;
   text-align: center;
-  margin: 20px;
+  align-items: center;
   img {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+  }
+  @media screen and (min-width: 1000px) {
+    margin: 20px;
+    max-width: 200px;
+    img {
+      width: 200px;
+      height: 200px;
+    }
   }
 `;
 

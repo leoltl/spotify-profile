@@ -7,29 +7,39 @@ import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import { generateReqHeader } from "../../utils";
 
 const TopTrackHeader = styled.div`
-  display: flex;
-  width: 70%;
-  margin: 0 auto;
-  margin-bottom: 25px;
-  padding: 0 20px 20px 20px;
+  margin-bottom: 20px;
+  h2 {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 20px 0 30px;
+    text-align: center;
+  }
   ul {
     display: flex;
     margin-left: auto;
+    justify-content: space-around;
     & > li {
+      font-size: 14px;
       margin-left: 20px;
       text-decoration: underline;
       cursor: pointer;
     }
   }
-  h2 {
-    font-size: 24px;
-    font-weight: 600;
+
+  @media screen and (min-width: 1000px) {
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    padding: 0 20px 20px 20px;
   }
 `;
 
 const TopTrackBody = styled.div`
-  width: 70%;
-  margin: 0 auto;
+  @media screen and (min-width: 1000px) {
+    width: 70%;
+    margin: 0 auto;
+  }
 `;
 export default class TopTracks extends Component {
   state = { time_range: "long_term" };

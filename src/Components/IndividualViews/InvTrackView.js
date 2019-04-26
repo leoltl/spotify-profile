@@ -107,8 +107,6 @@ export default class InvTrackView extends Component {
 
 const TrackAnalysisWrapper = styled.div`
   display: grid;
-  width: 70%;
-  margin: 0 auto;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   & > * {
@@ -127,27 +125,19 @@ const TrackAnalysisWrapper = styled.div`
     font-size: 12px;
     color: ${colors.lightGrey};
   }
+  @media screen and (min-width: 1000px) {
+    width: 70%;
+    margin: 0 auto;
+  }
 `;
 
 const TrackInfoWrapper = styled.div`
-width: 70%
-  margin: 25px auto;
-  margin-bottom: 100px;
-  display: flex;
-  img {
-    width: 250px;
-    height: 250px;
-  }
-  & > div {
-    margin-left: 200px;
-  }
-
+ text-align: center;
   h1 {
     font-size: ${fontSizes.xl};
     font-weight: 1000;
     margin: 20px 0;
   }
-
   h2 {
     color: ${colors.lightGrey};
     font-size: ${fontSizes.sm};
@@ -158,6 +148,20 @@ width: 70%
   p {
     color: ${colors.lightGrey};
     font-size: ${fontSizes.xs};
+  }
+  img {
+    width: 250px;
+    height: 250px;
+  }
+
+  @media screen and (min-width: 1000px) {
+    text-align: left;
+    width: 70%
+    margin: 25px auto;
+    display: flex;
+    & > div {
+      margin-left: 200px;
+    }
   }
 `;
 

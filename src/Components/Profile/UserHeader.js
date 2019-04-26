@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import theme from "../../UI/theme";
 import { generateReqHeader } from "../../utils";
 
+const { colors, fontSizes } = theme;
 const Header = styled.div`
   text-align: center;
   img {
@@ -19,7 +21,8 @@ export default class UserHeader extends React.Component {
   state = {
     displayURL: "",
     product: "",
-    followers: ""
+    followers: "",
+    country: ""
   };
 
   getUserProfile = () => {
@@ -30,7 +33,8 @@ export default class UserHeader extends React.Component {
           displayURL: data.images[0].url,
           product: data.product,
           followers: data.followers.total,
-          username: data.id
+          username: data.id,
+          country: data.country
         });
       });
   };
@@ -38,25 +42,49 @@ export default class UserHeader extends React.Component {
   componentDidMount() {
     this.getUserProfile();
   }
+
   render() {
     return (
       <Header>
         <img src={this.state.displayURL} alt="" />
         <br />
         <p>{this.state.username}</p>
-        {/* <div>
-          <div className="followers">
-            {this.state.followers}
-            <span>followers</span>
+        <UserInfo>
+          <div className="follower">
+            <div className="dynamic">{this.state.followers}</div>
+            <p>followers</p>
           </div>
-          <div className="following">
-            0<span>following</span>
+          <div className="genre">
+            <div className="dynamic">{this.state.country}</div>
+            <p>country</p>
           </div>
-          <div className="playlists">
-            0<span>playlists</span>
+          <div className="popularity">
+            <div className="dynamic">{this.state.product}</div>
+            <p>product</p>
           </div>
-        </div> */}
+        </UserInfo>
       </Header>
     );
   }
 }
+
+const UserInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  p {
+    margin: 20px;
+    text-transform: uppercase;
+    color: ${colors.lightGrey};
+    font-size: ${fontSizes.sm};
+  }
+  .genre {
+    text-transform: capitalize;
+  }
+  .dynamic {
+    color: ${colors.offGreen};
+    font-weight: 600;
+    font-size: ${fontSizes.md};
+    margin: 10px;
+    text-transform: capitalize;
+  }
+`;

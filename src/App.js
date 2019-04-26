@@ -14,14 +14,12 @@ const GlobalStyle = styled.div`
 `;
 
 class App extends React.Component {
-  state = { token: false };
+  state = { token: true };
   componentDidMount() {
     let token = this.getHashParams(window.location.hash);
     if (token.access_token) {
       sessionStorage.setItem("token", token.access_token);
       sessionStorage.setItem("expires", token.expires_in);
-      localStorage.setItem("token", token.access_token);
-      localStorage.setItem("expires", token.expires_in);
       this.setState({ token: token });
     }
   }

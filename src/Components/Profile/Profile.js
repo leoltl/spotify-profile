@@ -7,9 +7,14 @@ import styled from "styled-components";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 
 const TopTenWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 50px;
+  & > div {
+    margin-top: 50px;
+  }
+  @media screen and (min-width: 1000px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 50px;
+  }
 `;
 
 export default class Profile extends Component {

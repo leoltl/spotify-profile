@@ -87,7 +87,7 @@ export default class InvArtistView extends Component {
             </ArtistInfo>
             {this.state.Followed ? (
               <Button danger onClick={() => this.followArtist(Artist.id)}>
-                UnFollow
+                Following
               </Button>
             ) : (
               <Button primary onClick={() => this.followArtist(Artist.id)}>
@@ -139,12 +139,18 @@ const Header = styled.div`
 `;
 
 const Body = styled.div`
-  width: 70%;
-  margin: 20px auto;
   h2 {
     text-align: center;
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 600;
+  }
+  @media screen and (min-width: 1000px) {
+    width: 70%;
+    margin: 20px auto;
+    h2 {
+      font-size: 28px;
+      font-weight: 600;
+    }
   }
 `;
 

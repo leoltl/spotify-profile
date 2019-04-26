@@ -58,11 +58,12 @@ const Button = styled.button`
     ${props =>
       props.danger &&
       css`
+        text-transform: Capitalize;
         display: inline-block;
         &:hover,
         &:focus {
-          border-color: red;
-          background-color: red;
+          border-color: #d9534f;
+          background-color: #d9534f;
         }
       `}
 `;
