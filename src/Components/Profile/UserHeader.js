@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../UI/theme";
-import FetchData from "../FetchData";
+import FetchData from "../Common/FetchData";
 
 const { colors, fontSizes } = theme;
 const Header = styled.div`

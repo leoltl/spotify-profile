@@ -6,7 +6,7 @@ import ListHeader from "../../UI/ListHeader";
 import ListRail from "../../UI/ListRail";
 import { Link } from "react-router-dom";
 
-import FetchData from "../FetchData";
+import FetchData from "../Common/FetchData";
 
 const TopArtist = () => {
   return (

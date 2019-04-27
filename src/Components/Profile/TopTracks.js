@@ -1,12 +1,12 @@
 import React from "react";
-import TrackList from "../_test/TrackList";
+import TrackList from "../Common/TrackList";
 import { Link } from "react-router-dom";
 
 import ListHeader from "../../UI/ListHeader";
 import Button from "../../UI/Button";
 import ListRail from "../../UI/ListRail";
 
-import FetchData from "../FetchData";
+import FetchData from "../Common/FetchData";
 
 const TopTracks = () => {
   return (

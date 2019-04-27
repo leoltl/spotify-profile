@@ -3,9 +3,9 @@ import styled from "styled-components";
 import Button from "../../UI/Button";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import theme from "../../UI/theme";
-import TrackList from "../_test/TrackList";
+import TrackList from "../Common/TrackList";
 import { generateReqHeader, formatComma } from "../../utils";
-import FetchData from "../FetchData";
+import FetchData from "../Common/FetchData";
 
 const { colors, fontSizes } = theme;
 
