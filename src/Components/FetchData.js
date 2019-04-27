@@ -10,7 +10,7 @@ class FetchData extends React.Component {
   };
 
   componentDidMount() {
-    fetch(this.props.url, generateReqHeader())
+    fetch(this.props.url, generateReqHeader(this.props.method))
       .then(res => res.json())
       .then(data => {
         this.setState({ data: data, loading: false });
