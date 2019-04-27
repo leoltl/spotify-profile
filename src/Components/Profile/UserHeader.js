@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import theme from "../../UI/theme";
-import { generateReqHeader } from "../../utils";
+import FetchData from "../FetchData";
 
 const { colors, fontSizes } = theme;
 const Header = styled.div`
   text-align: center;
+  & > div {
+    margin: 0 auto;
+  }
   img {
     border-radius: 50%;
     height: 150px;
@@ -17,56 +20,46 @@ const Header = styled.div`
     font-weight: 800;
   }
 `;
-export default class UserHeader extends React.Component {
-  state = {
-    displayURL: "",
-    product: "",
-    followers: "",
-    country: ""
-  };
 
-  getUserProfile = () => {
-    fetch("https://api.spotify.com/v1/me", generateReqHeader("GET"))
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          displayURL: data.images[0].url,
-          product: data.product,
-          followers: data.followers.total,
-          username: data.id,
-          country: data.country
-        });
-      });
-  };
-
-  componentDidMount() {
-    this.getUserProfile();
-  }
-
-  render() {
-    return (
-      <Header>
-        <img src={this.state.displayURL} alt="" />
-        <br />
-        <p>{this.state.username}</p>
-        <UserInfo>
-          <div className="follower">
-            <div className="dynamic">{this.state.followers}</div>
-            <p>followers</p>
-          </div>
-          <div className="genre">
-            <div className="dynamic">{this.state.country}</div>
-            <p>country</p>
-          </div>
-          <div className="popularity">
-            <div className="dynamic">{this.state.product}</div>
-            <p>product</p>
-          </div>
-        </UserInfo>
-      </Header>
-    );
-  }
-}
+const UserHeader = () => {
+  return (
+    <React.Fragment>
+      <FetchData url="https://api.spotify.com/v1/me" method="GET">
+        {({ loading, data, error }) => {
+          console.log(data);
+          if (loading) {
+            return <Header>{loading}</Header>;
+          }
+          if (error) {
+            console.error(error);
+            return;
+          }
+          return (
+            <Header>
+              <img src={data.images[0].url} alt="" />
+              <br />
+              <p>{data.display_name}</p>
+              <UserInfo>
+                <div className="follower">
+                  <div className="dynamic">{data.followers.total}</div>
+                  <p>followers</p>
+                </div>
+                <div className="genre">
+                  <div className="dynamic">{data.country}</div>
+                  <p>country</p>
+                </div>
+                <div className="popularity">
+                  <div className="dynamic">{data.product}</div>
+                  <p>product</p>
+                </div>
+              </UserInfo>
+            </Header>
+          );
+        }}
+      </FetchData>
+    </React.Fragment>
+  );
+};
 
 const UserInfo = styled.div`
   display: flex;
@@ -88,3 +81,5 @@ const UserInfo = styled.div`
     text-transform: capitalize;
   }
 `;
+
+export default UserHeader;

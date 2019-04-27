@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Link, withRouter, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IconSpotify, IconMicrophone, IconUser, IconMusic } from "./icons";
 import theme from "../UI/theme";
 
@@ -65,9 +65,7 @@ const NavBar = styled.nav`
       flex-direction: column;
     }
     .active {
-      box-sizing: border-box;
-      border-left: 5px solid ${colors.green};
-      padding-left: -5px
+      border-right: 5px solid ${colors.green};
       border-bottom: none;
     }
   }
@@ -75,7 +73,6 @@ const NavBar = styled.nav`
 
 const NavIcon = styled.li`
   font-size: 12px;
-  padding: 5px;
   margin: auto 10px;
   text-align: center;
   svg {
@@ -114,7 +111,6 @@ const NavIcon = styled.li`
 
 class Navigation extends Component {
   render() {
-    console.log(this.props.location.pathname);
     return (
       <NavBar>
         <Link to="/" className="home">
@@ -148,4 +144,4 @@ class Navigation extends Component {
   }
 }
 
-export default withRouter(Navigation);
+export default Navigation;
