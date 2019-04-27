@@ -26,7 +26,6 @@ const UserHeader = () => {
     <React.Fragment>
       <FetchData url="https://api.spotify.com/v1/me" method="GET">
         {({ loading, data, error }) => {
-          console.log(data);
           if (loading) {
             return <Header>{loading}</Header>;
           }

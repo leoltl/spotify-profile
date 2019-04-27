@@ -4,7 +4,7 @@ import Button from "../../UI/Button";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import theme from "../../UI/theme";
 import Track from "../Profile/Track";
-import { generateReqHeader } from "../../utils";
+import { generateReqHeader, formatDuration, formatComma } from "../../utils";
 
 const { colors, fontSizes } = theme;
 
@@ -173,12 +173,3 @@ const ArtistInfo = styled.div`
     margin: 10px;
   }
 `;
-
-const formatDuration = millis => {
-  const minutes = Math.floor(millis / 60000);
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-};
-
-const formatComma = number =>
-  number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

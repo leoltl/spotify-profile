@@ -7,6 +7,7 @@ import Button from "../../UI/Button";
 import ListRail from "../../UI/ListRail";
 
 import FetchData from "../FetchData";
+import { formatDuration } from "../../utils";
 
 const TopTracks = () => {
   return (
@@ -49,26 +50,3 @@ const TopTracks = () => {
 };
 
 export default TopTracks;
-
-function formatDuration(millis) {
-  const minutes = Math.floor(millis / 60000);
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-}
-
-// state = { topTracks: [] };
-
-// componentDidMount() {
-//   this.getTopTracks();
-// }
-
-// getTopTracks = () => {
-//   fetch(
-//     "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10",
-//     generateReqHeader("GET")
-//   )
-//     .then(res => res.json())
-//     .then(data => {
-//       this.setState({ topTracks: data.items });
-//     });
-// };

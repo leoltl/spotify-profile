@@ -15,7 +15,6 @@ const TopArtist = () => {
       method="GET"
     >
       {({ data, loading, error }) => {
-        console.log(data);
         if (loading) {
           return <ListRail>{loading}</ListRail>;
         }

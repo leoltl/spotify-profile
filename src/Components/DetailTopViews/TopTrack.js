@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Track from "../Profile/Track";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 
-import { generateReqHeader } from "../../utils";
+import { generateReqHeader, formatDuration } from "../../utils";
 
 const TopTrackHeader = styled.div`
   margin-bottom: 20px;
@@ -97,10 +97,4 @@ export default class TopTracks extends Component {
       </MainContentWrapper>
     );
   }
-}
-
-function formatDuration(millis) {
-  const minutes = Math.floor(millis / 60000);
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
