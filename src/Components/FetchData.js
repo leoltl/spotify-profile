@@ -9,7 +9,22 @@ class FetchData extends React.Component {
     error: ""
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.setState({
+        loading: (
+          <BarLoader loading sizeUnit={"px"} size={150} color={"#1ed760"} />
+        )
+      });
+      this.apiCall();
+    }
+  }
+
   componentDidMount() {
+    this.apiCall();
+  }
+
+  apiCall = () => {
     let { method, url, params } = this.props;
     axios({
       method: method,
@@ -27,7 +42,7 @@ class FetchData extends React.Component {
       .catch(err => {
         this.setState({ error: err });
       });
-  }
+  };
 
   render() {
     return this.props.children(this.state);

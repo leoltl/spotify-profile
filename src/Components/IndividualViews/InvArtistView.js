@@ -3,121 +3,11 @@ import styled from "styled-components";
 import Button from "../../UI/Button";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import theme from "../../UI/theme";
-import Track from "../Profile/Track";
-import { generateReqHeader, formatDuration, formatComma } from "../../utils";
+import TrackList from "../_test/TrackList";
+import { generateReqHeader, formatComma } from "../../utils";
+import FetchData from "../FetchData";
 
 const { colors, fontSizes } = theme;
-
-export default class InvArtistView extends Component {
-  constructor() {
-    super();
-    this.state = { Artist: null, artistsTopTrack: null, Followed: false };
-  }
-
-  getArtist = artistId => {
-    fetch(
-      `https://api.spotify.com/v1/artists/${artistId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ Artist: data });
-      });
-  };
-
-  getFollowStatus = artistId => {
-    fetch(
-      `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => this.setState({ Followed: data[0] }));
-  };
-
-  getArtistTopTracks = artistId => {
-    fetch(
-      `https://api.spotify.com/v1/artists/${artistId}/top-tracks?country=CA`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ artistsTopTrack: data.tracks });
-      });
-  };
-
-  followArtist = artistId => {
-    let reqMethod = this.state.Followed ? "DELETE" : "PUT";
-    fetch(
-      `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
-      generateReqHeader(reqMethod)
-    ).then(this.setState({ Followed: !this.state.Followed }));
-  };
-
-  componentDidMount() {
-    const id = this.props.match.params.id;
-    this.getArtist(id);
-    this.getArtistTopTracks(id);
-    this.getFollowStatus(id);
-  }
-
-  render() {
-    let { Artist, artistsTopTrack } = this.state;
-    if (Artist && artistsTopTrack) {
-      return (
-        <MainContentWrapper>
-          <Header>
-            <img src={Artist.images[0].url} alt="" />
-            <br />
-            <h3>{Artist.name}</h3>
-            <ArtistInfo>
-              <div className="followers">
-                <div className="dynamic">
-                  {formatComma(Artist.followers.total)}
-                </div>
-                <p>followers</p>
-              </div>
-              <div className="genre">
-                <div className="dynamic">{Artist.genres[0]}</div>
-                <p>Genres</p>
-              </div>
-              <div className="popularity">
-                <div className="dynamic">{Artist.popularity}%</div>
-                <p>Popularity</p>
-              </div>
-            </ArtistInfo>
-            {this.state.Followed ? (
-              <Button danger onClick={() => this.followArtist(Artist.id)}>
-                Following
-              </Button>
-            ) : (
-              <Button primary onClick={() => this.followArtist(Artist.id)}>
-                Follow
-              </Button>
-            )}
-          </Header>
-          <Body>
-            <h2>{Artist.name}'s Top 10 Tracks</h2>
-            {artistsTopTrack
-              ? artistsTopTrack.map(track => (
-                  <Track
-                    imgURL={track.album.images[1].url}
-                    name={track.name}
-                    artist={track.artists[0].name}
-                    album={track.album.name}
-                    length={formatDuration(track.duration_ms)}
-                    key={track.id}
-                    trackId={track.id}
-                  />
-                ))
-              : null}
-          </Body>
-        </MainContentWrapper>
-      );
-    } else {
-      return null;
-    }
-  }
-}
 
 const Header = styled.div`
   display: flex;
@@ -173,3 +63,109 @@ const ArtistInfo = styled.div`
     margin: 10px;
   }
 `;
+
+export default class InvArtistView extends Component {
+  constructor() {
+    super();
+    this.state = { Artist: null, artistsTopTrack: null, Followed: false };
+  }
+
+  getArtist = artistId => {
+    fetch(
+      `https://api.spotify.com/v1/artists/${artistId}`,
+      generateReqHeader("GET")
+    )
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ Artist: data });
+      });
+  };
+
+  getFollowStatus = artistId => {
+    fetch(
+      `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`,
+      generateReqHeader("GET")
+    )
+      .then(res => res.json())
+      .then(data => this.setState({ Followed: data[0] }));
+  };
+
+  followArtist = artistId => {
+    let reqMethod = this.state.Followed ? "DELETE" : "PUT";
+    fetch(
+      `https://api.spotify.com/v1/me/following?type=artist&ids=${artistId}`,
+      generateReqHeader(reqMethod)
+    ).then(this.setState({ Followed: !this.state.Followed }));
+  };
+
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    this.getArtist(id);
+    this.getFollowStatus(id);
+  }
+
+  render() {
+    const ArtistId = this.props.match.params.id;
+    let { Artist } = this.state;
+    if (Artist) {
+      return (
+        <MainContentWrapper>
+          <Header>
+            <img src={Artist.images[0].url} alt="" />
+            <br />
+            <h3>{Artist.name}</h3>
+            <ArtistInfo>
+              <div className="followers">
+                <div className="dynamic">
+                  {formatComma(Artist.followers.total)}
+                </div>
+                <p>followers</p>
+              </div>
+              <div className="genre">
+                <div className="dynamic">{Artist.genres[0]}</div>
+                <p>Genres</p>
+              </div>
+              <div className="popularity">
+                <div className="dynamic">{Artist.popularity}%</div>
+                <p>Popularity</p>
+              </div>
+            </ArtistInfo>
+            {this.state.Followed ? (
+              <Button danger onClick={() => this.followArtist(Artist.id)}>
+                Following
+              </Button>
+            ) : (
+              <Button primary onClick={() => this.followArtist(Artist.id)}>
+                Follow
+              </Button>
+            )}
+          </Header>
+          <Body>
+            <h2>{Artist.name}'s Top 10 Tracks</h2>
+            <FetchData
+              url={`/artists/${ArtistId}/top-tracks`}
+              method="get"
+              params={{ country: "CA" }}
+            >
+              {({ loading, data, error }) => {
+                if (error) {
+                  console.error(error);
+                }
+                if (loading) {
+                  return loading;
+                }
+                return (
+                  <>
+                    <TrackList render={data.tracks} />
+                  </>
+                );
+              }}
+            </FetchData>
+          </Body>
+        </MainContentWrapper>
+      );
+    } else {
+      return null;
+    }
+  }
+}

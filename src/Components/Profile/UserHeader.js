@@ -20,46 +20,6 @@ const Header = styled.div`
     font-weight: 800;
   }
 `;
-
-const UserHeader = () => {
-  return (
-    <React.Fragment>
-      <FetchData url="https://api.spotify.com/v1/me" method="GET">
-        {({ loading, data, error }) => {
-          if (loading) {
-            return <Header>{loading}</Header>;
-          }
-          if (error) {
-            console.error(error);
-            return;
-          }
-          return (
-            <Header>
-              <img src={data.images[0].url} alt="" />
-              <br />
-              <p>{data.display_name}</p>
-              <UserInfo>
-                <div className="follower">
-                  <div className="dynamic">{data.followers.total}</div>
-                  <p>followers</p>
-                </div>
-                <div className="genre">
-                  <div className="dynamic">{data.country}</div>
-                  <p>country</p>
-                </div>
-                <div className="popularity">
-                  <div className="dynamic">{data.product}</div>
-                  <p>product</p>
-                </div>
-              </UserInfo>
-            </Header>
-          );
-        }}
-      </FetchData>
-    </React.Fragment>
-  );
-};
-
 const UserInfo = styled.div`
   display: flex;
   justify-content: center;
@@ -80,5 +40,42 @@ const UserInfo = styled.div`
     text-transform: capitalize;
   }
 `;
+
+const UserHeader = () => {
+  return (
+    <FetchData url="https://api.spotify.com/v1/me" method="GET">
+      {({ loading, data, error }) => {
+        if (loading) {
+          return <Header>{loading}</Header>;
+        }
+        if (error) {
+          console.error(error);
+          return;
+        }
+        return (
+          <Header>
+            <img src={data.images[0].url} alt="" />
+            <br />
+            <p>{data.display_name}</p>
+            <UserInfo>
+              <div className="follower">
+                <div className="dynamic">{data.followers.total}</div>
+                <p>followers</p>
+              </div>
+              <div className="genre">
+                <div className="dynamic">{data.country}</div>
+                <p>country</p>
+              </div>
+              <div className="popularity">
+                <div className="dynamic">{data.product}</div>
+                <p>product</p>
+              </div>
+            </UserInfo>
+          </Header>
+        );
+      }}
+    </FetchData>
+  );
+};
 
 export default UserHeader;

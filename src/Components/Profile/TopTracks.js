@@ -1,5 +1,5 @@
 import React from "react";
-import Track from "./Track";
+import TrackList from "../_test/TrackList";
 import { Link } from "react-router-dom";
 
 import ListHeader from "../../UI/ListHeader";
@@ -7,7 +7,6 @@ import Button from "../../UI/Button";
 import ListRail from "../../UI/ListRail";
 
 import FetchData from "../FetchData";
-import { formatDuration } from "../../utils";
 
 const TopTracks = () => {
   return (
@@ -32,17 +31,7 @@ const TopTracks = () => {
                 <Link to="/tracks">See more</Link>
               </Button>
             </ListHeader>
-            {data.items.map(track => (
-              <Track
-                imgURL={track.album.images[1].url}
-                name={track.name}
-                artist={track.artists[0].name}
-                album={track.album.name}
-                length={formatDuration(track.duration_ms)}
-                key={track.id}
-                trackId={track.id}
-              />
-            ))}
+            <TrackList render={data.items} />
           </ListRail>
         );
       }}

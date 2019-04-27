@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import ArtistCard from "./ArtistCard";
 
-import { generateReqHeader } from "../../utils";
 import FetchData from "../FetchData";
 
 const TopArtistHeader = styled.div`
@@ -50,11 +49,10 @@ export default class TopArtists extends Component {
   state = { time_range: "long_term" };
 
   selectTimeRange = timerange => {
-    this.setState({ time_range: timerange }, () => this.getTopArtists());
+    this.setState({ time_range: timerange });
   };
 
   render() {
-    let { topArtists } = this.state;
     return (
       <MainContentWrapper>
         <TopArtistHeader>
@@ -75,12 +73,11 @@ export default class TopArtists extends Component {
           params={{ time_range: this.state.time_range, limit: 30 }}
         >
           {({ loading, error, data }) => {
-            if (loading) {
-              return <TopArtistBody>{loading}</TopArtistBody>;
-            }
             if (error) {
               console.error(error);
-              return null;
+            }
+            if (loading) {
+              return <TopArtistBody>{loading}</TopArtistBody>;
             }
             return (
               <TopArtistBody>
