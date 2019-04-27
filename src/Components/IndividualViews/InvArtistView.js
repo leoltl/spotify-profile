@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Button from "../../UI/Button";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
-import theme from "../../UI/theme";
 import TrackList from "../Common/TrackList";
 import { generateReqHeader, formatComma } from "../../utils";
 import FetchData from "../Common/FetchData";
-
-const { colors, fontSizes } = theme;
+import HighlightThreeColumn from "../Common/HighlightThreeColumn";
 
 const Header = styled.div`
   display: flex;
@@ -41,26 +39,6 @@ const Body = styled.div`
       font-size: 28px;
       font-weight: 600;
     }
-  }
-`;
-
-const ArtistInfo = styled.div`
-  display: flex;
-  justify-content: center;
-  p {
-    margin: 20px;
-    text-transform: uppercase;
-    color: ${colors.lightGrey};
-    font-size: ${fontSizes.sm};
-  }
-  .genre {
-    text-transform: capitalize;
-  }
-  .dynamic {
-    color: ${colors.blue};
-    font-weight: 600;
-    font-size: ${fontSizes.md};
-    margin: 10px;
   }
 `;
 
@@ -114,22 +92,15 @@ export default class InvArtistView extends Component {
             <img src={Artist.images[0].url} alt="" />
             <br />
             <h3>{Artist.name}</h3>
-            <ArtistInfo>
-              <div className="followers">
-                <div className="dynamic">
-                  {formatComma(Artist.followers.total)}
-                </div>
-                <p>followers</p>
-              </div>
-              <div className="genre">
-                <div className="dynamic">{Artist.genres[0]}</div>
-                <p>Genres</p>
-              </div>
-              <div className="popularity">
-                <div className="dynamic">{Artist.popularity}%</div>
-                <p>Popularity</p>
-              </div>
-            </ArtistInfo>
+
+            <HighlightThreeColumn
+              name={["followers", "Main Genre", "Popularity"]}
+              value={[
+                formatComma(Artist.followers.total),
+                Artist.genres[0],
+                Artist.popularity
+              ]}
+            />
             {this.state.Followed ? (
               <Button danger onClick={() => this.followArtist(Artist.id)}>
                 Following

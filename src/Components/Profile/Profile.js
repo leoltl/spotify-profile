@@ -1,12 +1,12 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
+import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import TopArtist from "./TopArtist";
 import TopTracks from "./TopTracks";
 import UserHeader from "./UserHeader";
 
-import styled from "styled-components";
-import { MainContentWrapper } from "../../UI/MainContentWrapper";
-
-const TopTenWrapper = styled.div`
+const TwoAcrossWrapper = styled.div`
   & > div {
     margin-top: 50px;
   }
@@ -23,10 +23,10 @@ export default class Profile extends Component {
       <>
         <MainContentWrapper>
           <UserHeader />
-          <TopTenWrapper>
+          <TwoAcrossWrapper>
             <TopArtist />
             <TopTracks />
-          </TopTenWrapper>
+          </TwoAcrossWrapper>
         </MainContentWrapper>
       </>
     );

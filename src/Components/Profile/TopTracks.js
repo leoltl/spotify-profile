@@ -1,10 +1,7 @@
 import React from "react";
-import TrackList from "../Common/TrackList";
-import { Link } from "react-router-dom";
 
-import ListHeader from "../../UI/ListHeader";
-import Button from "../../UI/Button";
-import ListRail from "../../UI/ListRail";
+import TrackList from "../Common/TrackList";
+import TopHeader from "./TopHeader";
 
 import FetchData from "../Common/FetchData";
 
@@ -17,22 +14,17 @@ const TopTracks = () => {
     >
       {({ data, loading, error }) => {
         if (loading) {
-          return <ListRail>{loading}</ListRail>;
+          return <div>{loading}</div>;
         }
         if (error) {
           console.error(error);
           return;
         }
         return (
-          <ListRail className="top-track">
-            <ListHeader>
-              <h2>Top Tracks of All Time</h2>
-              <Button className="button">
-                <Link to="/tracks">See more</Link>
-              </Button>
-            </ListHeader>
+          <div className="top-track">
+            <TopHeader title="Top Tracks of All Time" to="/tracks" />
             <TrackList render={data.items} />
-          </ListRail>
+          </div>
         );
       }}
     </FetchData>
