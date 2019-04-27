@@ -12,8 +12,9 @@ import { formatDuration } from "../../utils";
 const TopTracks = () => {
   return (
     <FetchData
-      url="https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=10"
-      method="GET"
+      url="/me/top/tracks"
+      method="get"
+      params={{ time_range: "long_term", limit: 10 }}
     >
       {({ data, loading, error }) => {
         if (loading) {

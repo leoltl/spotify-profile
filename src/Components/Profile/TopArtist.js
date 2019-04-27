@@ -10,10 +10,7 @@ import FetchData from "../FetchData";
 
 const TopArtist = () => {
   return (
-    <FetchData
-      url="https://api.spotify.com/v1/me/top/artists?limit=10"
-      method="GET"
-    >
+    <FetchData url="/me/top/artists" method="get" params={{ limit: 10 }}>
       {({ data, loading, error }) => {
         if (loading) {
           return <ListRail>{loading}</ListRail>;

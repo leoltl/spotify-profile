@@ -5,6 +5,7 @@ import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import ArtistCard from "./ArtistCard";
 
 import { generateReqHeader } from "../../utils";
+import FetchData from "../FetchData";
 
 const TopArtistHeader = styled.div`
   margin-bottom: 20px;
@@ -47,22 +48,7 @@ const TopArtistBody = styled.div`
 `;
 export default class TopArtists extends Component {
   state = { time_range: "long_term" };
-  componentDidMount() {
-    this.getTopArtists();
-  }
 
-  getTopArtists = () => {
-    fetch(
-      `https://api.spotify.com/v1/me/top/artists?time_range=${
-        this.state.time_range
-      }&limit=30`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ topArtists: data.items });
-      });
-  };
   selectTimeRange = timerange => {
     this.setState({ time_range: timerange }, () => this.getTopArtists());
   };
@@ -83,18 +69,33 @@ export default class TopArtists extends Component {
             </li>
           </ul>
         </TopArtistHeader>
-        <TopArtistBody>
-          {topArtists
-            ? topArtists.map(artist => (
-                <ArtistCard
-                  imgURL={artist.images[0].url}
-                  name={artist.name}
-                  key={artist.id}
-                  artistId={artist.id}
-                />
-              ))
-            : null}
-        </TopArtistBody>
+        <FetchData
+          url="/me/top/artists"
+          method="get"
+          params={{ time_range: this.state.time_range, limit: 30 }}
+        >
+          {({ loading, error, data }) => {
+            if (loading) {
+              return <TopArtistBody>{loading}</TopArtistBody>;
+            }
+            if (error) {
+              console.error(error);
+              return null;
+            }
+            return (
+              <TopArtistBody>
+                {data.items.map(artist => (
+                  <ArtistCard
+                    imgURL={artist.images[0].url}
+                    name={artist.name}
+                    key={artist.id}
+                    artistId={artist.id}
+                  />
+                ))}
+              </TopArtistBody>
+            );
+          }}
+        </FetchData>
       </MainContentWrapper>
     );
   }
