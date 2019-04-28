@@ -4,27 +4,6 @@ import styled, { css } from "styled-components";
 import theme from "../../UI/theme";
 const { colors, fontSizes } = theme;
 
-const HightlightThreeColumn = props => {
-  const { name, value, user } = props;
-  return (
-    <HighlightWrapper user={user ? user : null}>
-      <div className="followers">
-        <div className="dynamic">{value[0]}</div>
-        <p>{name[0]}</p>
-      </div>
-      <div className="genre">
-        <div className="dynamic">{value[1]}</div>
-        <p>{name[1]}</p>
-      </div>
-      <div className="popularity">
-        <div className="dynamic">{value[2]}</div>
-        <p>{name[2]}</p>
-      </div>
-    </HighlightWrapper>
-  );
-};
-export default HightlightThreeColumn;
-
 export const HighlightWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -53,3 +32,24 @@ export const HighlightWrapper = styled.div`
       }
     `}
 `;
+
+const HightlightThreeColumn = props => {
+  const { name, value, user } = props;
+  return (
+    <HighlightWrapper user={user ? user : null}>
+      <div className="followers">
+        <div className="dynamic">{value[0]}</div>
+        <p>{name[0]}</p>
+      </div>
+      <div className="genre">
+        <div className="dynamic">{value[1]}</div>
+        <p>{name[1]}</p>
+      </div>
+      <div className="popularity">
+        <div className="dynamic">{value[2]}</div>
+        <p>{name[2]}</p>
+      </div>
+    </HighlightWrapper>
+  );
+};
+export default HightlightThreeColumn;
