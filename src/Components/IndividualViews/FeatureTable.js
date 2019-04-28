@@ -109,7 +109,6 @@ const FeatureTable = props => {
 export default FeatureTable;
 
 const FeatureTableWrapper = styled.div`
-  width: 70%;
   margin: 40px auto;
   border: 2px ${colors.lightGrey};
   border-style: none none solid solid;
@@ -126,15 +125,21 @@ const FeatureTableWrapper = styled.div`
   & > div {
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 30px;
     margin: 10px 0;
   }
 
+  @media screen and (min-width: 1000px) {
+    width: 70%;
+    & > div {
+      height: 50px;
+    }
+  }
   ${props =>
     props.smallView &&
     css`
       margin: 0 auto;
-      width: 100%;
+      width: 90%;
       & > div {
         height: 20px;
       }

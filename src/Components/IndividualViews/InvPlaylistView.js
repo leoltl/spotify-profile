@@ -53,11 +53,6 @@ export default InvPlaylistView;
 
 const InvPlaylistViewWrapper = styled.div`
   margin-top: 50px;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  & > div {
-    margin: 0 30px;
-  }
   .left {
     display: flex;
     flex-direction: column;
@@ -66,6 +61,13 @@ const InvPlaylistViewWrapper = styled.div`
     p {
       text-align: center;
       font-size: 14px;
+    }
+  }
+  @media screen and (min-width: 1000px) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    & > div {
+      margin: 0 30px;
     }
   }
 `;
