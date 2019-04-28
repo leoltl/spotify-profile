@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navigation from "./Navigation";
 import TopTrack from "./DetailTopViews/TopTrack";
 import TopArtists from "./DetailTopViews/TopArtists";
+import Playlist from "./Playlist/Playlist";
 import Profile from "./Profile/Profile";
 import InvArtistView from "./IndividualViews/InvArtistView";
 import InvTrackView from "./IndividualViews/InvTrackView";
@@ -18,6 +19,7 @@ export default class Dashboard extends Component {
             <Route exact path="/" component={Profile} />
             <Route exact path="/tracks" component={TopTrack} />
             <Route exact path="/artists" component={TopArtists} />
+            <Route exact path="/playlists" component={Playlist} />
             <Route path="/artist/:id" component={InvArtistView} />
             <Route path="/track/:id" component={InvTrackView} />
           </Switch>

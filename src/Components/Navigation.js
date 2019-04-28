@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
-import { IconSpotify, IconMicrophone, IconUser, IconMusic } from "./icons";
+import {
+  IconSpotify,
+  IconMicrophone,
+  IconUser,
+  IconMusic,
+  IconPlaylist
+} from "./icons";
 import theme from "../UI/theme";
 
 const { colors, fontSizes, spacing } = theme;
@@ -136,6 +142,13 @@ class Navigation extends Component {
               <IconMusic />
               <br />
               Top Tracks
+            </NavIcon>
+          </NavLink>
+          <NavLink to="/playlists" activeClassName="active">
+            <NavIcon>
+              <IconPlaylist />
+              <br />
+              PlayLists
             </NavIcon>
           </NavLink>
         </ul>

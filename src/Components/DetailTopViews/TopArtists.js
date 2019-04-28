@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import FetchData from "../Common/FetchData";
-import ArtistCard from "./ArtistCard";
+import ContentCard from "../Common/ContentCard";
 import Header from "./Header";
 
 export default class TopArtists extends Component {
@@ -32,11 +32,11 @@ export default class TopArtists extends Component {
             return (
               <TopArtistBody>
                 {data.items.map(artist => (
-                  <ArtistCard
-                    imgURL={artist.images[0].url}
+                  <ContentCard
+                    imgUrl={artist.images[0].url}
                     name={artist.name}
                     key={artist.id}
-                    artistId={artist.id}
+                    linkTo={`/artist/artist.id`}
                   />
                 ))}
               </TopArtistBody>
