@@ -10,43 +10,34 @@ const { colors, fontSizes } = theme;
 
 export default class InvTrackView extends Component {
   state = { TrackFeature: {}, TrackInfo: {}, TrackAnalysis: {} };
-  getTrackFeature = trackId => {
-    fetch(
-      `https://api.spotify.com/v1/audio-features/${trackId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ TrackFeature: data });
-      });
-  };
 
-  getTrackInfo = trackId => {
-    fetch(
-      `https://api.spotify.com/v1/tracks/${trackId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ TrackInfo: data });
-      });
-  };
-
-  getTrackAnalysis = trackId => {
-    fetch(
+  getAllTrackDetail = trackId => {
+    const urlsToFetch = [
       `https://api.spotify.com/v1/audio-analysis/${trackId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ TrackAnalysis: data });
-      });
+      `https://api.spotify.com/v1/tracks/${trackId}`,
+      `https://api.spotify.com/v1/audio-features/${trackId}`
+    ];
+    Promise.all(
+      urlsToFetch.map(url => {
+        return fetch(url, generateReqHeader("GET")).then(res => res.json());
+      })
+    ).then(parsedResponses =>
+      this.setState({
+        TrackAnalysis: parsedResponses[0],
+        TrackInfo: parsedResponses[1],
+        TrackFeature: parsedResponses[2]
+      })
+    );
+  };
+
+  process = prom => {
+    prom.then(parsedData => {
+      return parsedData;
+    });
   };
 
   componentDidMount() {
-    this.getTrackFeature(this.props.match.params.id);
-    this.getTrackInfo(this.props.match.params.id);
-    this.getTrackAnalysis(this.props.match.params.id);
+    this.getAllTrackDetail(this.props.match.params.id);
   }
 
   render() {
