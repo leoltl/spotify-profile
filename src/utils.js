@@ -28,3 +28,8 @@ export const getHashParams = url => {
 
 export const formatComma = number =>
   number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+export const parsePitchClass = note => {
+  const key = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
+  return key[note];
+};

@@ -7,18 +7,21 @@ import Button from "../../UI/Button";
 import theme from "../../UI/theme";
 import { BarLoader } from "react-spinners";
 
-import { generateReqHeader } from "../../utils";
+import {
+  generateReqHeader,
+  parsePitchClass,
+  formatDuration
+} from "../../utils";
 
 const { colors, fontSizes } = theme;
 
 export default class InvTrackView extends Component {
-  state = { TrackFeature: {}, TrackInfo: {}, TrackAnalysis: {} };
+  state = { TrackInfo: {}, TrackAnalysis: {} };
 
   getAllTrackDetail = trackId => {
     const urlsToFetch = [
       `https://api.spotify.com/v1/audio-analysis/${trackId}`,
-      `https://api.spotify.com/v1/tracks/${trackId}`,
-      `https://api.spotify.com/v1/audio-features/${trackId}`
+      `https://api.spotify.com/v1/tracks/${trackId}`
     ];
     Promise.all(
       urlsToFetch.map(url => {
@@ -29,8 +32,7 @@ export default class InvTrackView extends Component {
     ).then(parsedResponses =>
       this.setState({
         TrackAnalysis: parsedResponses[0],
-        TrackInfo: parsedResponses[1],
-        TrackFeature: parsedResponses[2]
+        TrackInfo: parsedResponses[1]
       })
     );
   };
@@ -40,12 +42,11 @@ export default class InvTrackView extends Component {
   }
 
   render() {
-    console.log(this.state.TrackFeature);
-    const { TrackInfo, TrackFeature, TrackAnalysis } = this.state;
+    const { TrackInfo, TrackAnalysis } = this.state;
 
     return (
       <MainContentWrapper>
-        {TrackInfo.album && TrackFeature.id && TrackAnalysis.track ? (
+        {TrackInfo.album && TrackAnalysis.track ? (
           <>
             <TrackInfoWrapper>
               <img src={TrackInfo.album.images[0].url} alt="album" />
@@ -66,7 +67,7 @@ export default class InvTrackView extends Component {
             </TrackInfoWrapper>
             <TrackAnalysisWrapper>
               <div className="">
-                <h3>{formatDuration(TrackFeature.duration_ms)}</h3>
+                <h3>{formatDuration(TrackInfo.duration_ms)}</h3>
                 <p>duration</p>
               </div>
               <div className="">
@@ -90,7 +91,17 @@ export default class InvTrackView extends Component {
                 <p>Time Signature</p>
               </div>
             </TrackAnalysisWrapper>
-            <FeatureTable value={TrackFeature} track={TrackInfo} />
+            <h4
+              style={{
+                margin: " 40px auto",
+                fontSize: "24px",
+                fontWeight: "600",
+                textAlign: "center"
+              }}
+            >
+              Audio Feature of {TrackInfo.name} by {TrackInfo.artists[0].name}
+            </h4>
+            <FeatureTable ids={this.props.match.params.id} />
           </>
         ) : (
           <TrackInfoWrapper>
@@ -161,14 +172,3 @@ const TrackInfoWrapper = styled.div`
     }
   }
 `;
-
-const formatDuration = millis => {
-  const minutes = Math.floor(millis / 60000);
-  const seconds = ((millis % 60000) / 1000).toFixed(0);
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-};
-
-export const parsePitchClass = note => {
-  const key = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
-  return key[note];
-};

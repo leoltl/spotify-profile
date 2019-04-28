@@ -47,7 +47,7 @@ export default function ContentCard(props) {
   const { linkTo, imgUrl, name, info, square } = props;
   return (
     <ContentCardWrapper square={square ? square : null}>
-      <Link to={linkTo}>
+      <Link to={linkTo ? linkTo : "#"}>
         <img src={imgUrl} alt="" />
         <h1>{name}</h1>
       </Link>

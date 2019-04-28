@@ -1,105 +1,108 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import theme from "../../UI/theme";
+import FetchData from "../Common/FetchData";
 
 const { colors } = theme;
 
 const FeatureTable = props => {
-  let {
-    acousticness,
-    danceability,
-    energy,
-    instrumentalness,
-    liveness,
-    speechiness,
-    valence
-  } = props.value;
-
-  acousticness = acousticness * 100;
-  danceability = danceability * 100;
-  energy = energy * 100;
-  instrumentalness = instrumentalness * 100;
-  liveness = liveness * 100;
-  speechiness = speechiness * 100;
-  valence = valence * 100;
   return (
-    <>
-      <h4
-        style={{
-          margin: " 40px auto",
-          fontSize: "24px",
-          fontWeight: "600",
-          textAlign: "center"
-        }}
-      >
-        Audio Feature of {props.track.name} by {props.track.artists[0].name}
-      </h4>
-      <FeatureTableWrapper>
-        <div
-          style={{
-            width: `${acousticness}%`,
-            backgroundColor: "rgba(255, 99, 132, 0.3)",
-            border: "1px solid rgba(255, 99, 132, 1)"
-          }}
-        >
-          <span>Acousticness</span>
-        </div>
-        <div
-          style={{
-            width: `${danceability}%`,
-            backgroundColor: "rgba(255, 159, 64, 0.3)",
-            border: "1px solid rgba(255, 159, 64, 1)"
-          }}
-        >
-          <span>Danceability</span>
-        </div>
-        <div
-          style={{
-            width: `${energy}%`,
-            backgroundColor: "rgba(255, 206, 86, 0.3)",
-            border: "1px solid rgba(255, 206, 86, 1)"
-          }}
-        >
-          <span>Energy</span>
-        </div>
-        <div
-          style={{
-            width: `${instrumentalness}%`,
-            backgroundColor: "rgba(75, 192, 192, 0.3)",
-            border: "1px solid rgba(75, 192, 192, 1)"
-          }}
-        >
-          <span>Instrumentalness</span>
-        </div>
-        <div
-          style={{
-            width: `${liveness}%`,
-            backgroundColor: "rgba(54, 162, 235, 0.3)",
-            border: "1px solid rgba(54, 162, 235, 1)"
-          }}
-        >
-          <span>Liveness</span>
-        </div>
-        <div
-          style={{
-            width: `${speechiness}%`,
-            backgroundColor: "rgba(104, 132, 245, 0.3)",
-            border: "1px solid rgba(104, 132, 245, 1)"
-          }}
-        >
-          <span>Speechiness</span>
-        </div>
-        <div
-          style={{
-            width: `${valence}%`,
-            backgroundColor: "rgba(153, 102, 255, 0.3)",
-            border: "1px solid rgba(153, 102, 255, 1)"
-          }}
-        >
-          <span>Valence</span>
-        </div>
-      </FeatureTableWrapper>
-    </>
+    <FetchData url="/audio-features" params={{ ids: props.ids }} method="get">
+      {({ data, loading, error }) => {
+        if (error) {
+          console.error(error);
+        }
+        if (loading) {
+          return loading;
+        }
+        const features = [
+          "acousticness",
+          "danceability",
+          "energy",
+          "instrumentalness",
+          "liveness",
+          "speechiness",
+          "valence"
+        ];
+
+        let featuresOutput = features.map(feature => {
+          return (
+            (data.audio_features
+              .map(track => track[feature])
+              .reduce((acc, cur) => acc + cur) /
+              data.audio_features.length) *
+            100
+          );
+        });
+        return (
+          <FeatureTableWrapper smallView={props.small ? props.small : null}>
+            <div
+              style={{
+                width: `${featuresOutput[0]}%`,
+                backgroundColor: "rgba(255, 99, 132, 0.3)",
+                border: "1px solid rgba(255, 99, 132, 1)"
+              }}
+            >
+              <span>Acousticness</span>
+            </div>
+            <div
+              style={{
+                width: `${featuresOutput[1]}%`,
+                backgroundColor: "rgba(255, 159, 64, 0.3)",
+                border: "1px solid rgba(255, 159, 64, 1)"
+              }}
+            >
+              <span>Danceability</span>
+            </div>
+            <div
+              style={{
+                width: `${featuresOutput[2]}%`,
+                backgroundColor: "rgba(255, 206, 86, 0.3)",
+                border: "1px solid rgba(255, 206, 86, 1)"
+              }}
+            >
+              <span>Energy</span>
+            </div>
+            <div
+              style={{
+                width: `${featuresOutput[3]}%`,
+                backgroundColor: "rgba(75, 192, 192, 0.3)",
+                border: "1px solid rgba(75, 192, 192, 1)"
+              }}
+            >
+              <span>Instrumentalness</span>
+            </div>
+            <div
+              style={{
+                width: `${featuresOutput[4]}%`,
+                backgroundColor: "rgba(54, 162, 235, 0.3)",
+                border: "1px solid rgba(54, 162, 235, 1)"
+              }}
+            >
+              <span>Liveness</span>
+            </div>
+            <div
+              style={{
+                width: `${featuresOutput[5]}%`,
+                backgroundColor: "rgba(104, 132, 245, 0.3)",
+                border: "1px solid rgba(104, 132, 245, 1)"
+              }}
+            >
+              <span>Speechiness</span>
+            </div>
+            <div
+              style={{
+                width: `${featuresOutput[6]}%`,
+                backgroundColor: "rgba(153, 102, 255, 0.3)",
+                border: "1px solid rgba(153, 102, 255, 1)"
+              }}
+            >
+              <span>Valence</span>
+            </div>
+          </FeatureTableWrapper>
+        );
+      }}
+    </FetchData>
   );
 };
 
@@ -126,4 +129,14 @@ const FeatureTableWrapper = styled.div`
     height: 50px;
     margin: 10px 0;
   }
+
+  ${props =>
+    props.smallView &&
+    css`
+      margin: 0 auto;
+      width: 100%;
+      & > div {
+        height: 20px;
+      }
+    `}
 `;

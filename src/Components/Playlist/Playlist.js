@@ -16,7 +16,6 @@ export default function Playlist() {
           if (loading) {
             return loading;
           }
-          console.log(data);
           return (
             <>
               <h2
