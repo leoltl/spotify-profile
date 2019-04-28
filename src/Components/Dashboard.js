@@ -8,6 +8,7 @@ import Playlist from "./Playlist/Playlist";
 import Profile from "./Profile/Profile";
 import InvArtistView from "./IndividualViews/InvArtistView";
 import InvTrackView from "./IndividualViews/InvTrackView";
+import InvPlaylistView from "./IndividualViews/InvPlaylistView";
 
 export default class Dashboard extends Component {
   render() {
@@ -22,6 +23,7 @@ export default class Dashboard extends Component {
             <Route exact path="/playlists" component={Playlist} />
             <Route path="/artist/:id" component={InvArtistView} />
             <Route path="/track/:id" component={InvTrackView} />
+            <Route path="/playlist/:id" component={InvPlaylistView} />
           </Switch>
         </Router>
       </>

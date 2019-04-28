@@ -19,12 +19,12 @@ const ContentCardWrapper = styled.div`
     margin-bottom: 10px;
   }
   h1 {
-    font-weight: 600;
+    font-weight: 500;
   }
   h2 {
     margin: 10px;
     color: ${colors.lightGrey};
-    font-size: ${fontSizes.sm};
+    font-size: ${fontSizes.xs};
   }
   @media screen and (min-width: 1000px) {
     margin: 20px;

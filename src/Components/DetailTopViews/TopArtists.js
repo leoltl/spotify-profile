@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
+import { ContentCardGrid } from "../../UI/ContentCardGrid";
 import FetchData from "../Common/FetchData";
 import ContentCard from "../Common/ContentCard";
 import Header from "./Header";
@@ -27,19 +27,19 @@ export default class TopArtists extends Component {
               console.error(error);
             }
             if (loading) {
-              return <TopArtistBody>{loading}</TopArtistBody>;
+              return <ContentCardGrid>{loading}</ContentCardGrid>;
             }
             return (
-              <TopArtistBody>
+              <ContentCardGrid>
                 {data.items.map(artist => (
                   <ContentCard
                     imgUrl={artist.images[0].url}
                     name={artist.name}
                     key={artist.id}
-                    linkTo={`/artist/artist.id`}
+                    linkTo={`/artist/${artist.id}`}
                   />
                 ))}
-              </TopArtistBody>
+              </ContentCardGrid>
             );
           }}
         </FetchData>
@@ -47,14 +47,3 @@ export default class TopArtists extends Component {
     );
   }
 }
-
-const TopArtistBody = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  @media screen and (min-width: 1000px) {
-    display: flex;
-    width: 70%;
-    margin: 0 auto;
-    flex-wrap: wrap;
-  }
-`;

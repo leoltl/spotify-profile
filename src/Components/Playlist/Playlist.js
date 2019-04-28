@@ -1,9 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 
 import FetchData from "../Common/FetchData";
 import ContentCard from "../Common/ContentCard";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
+import { ContentCardGrid } from "../../UI/ContentCardGrid";
 
 export default function Playlist() {
   return (
@@ -19,8 +19,17 @@ export default function Playlist() {
           console.log(data);
           return (
             <>
-              <h2>Your Playlists</h2>
-              <TopArtistBody>
+              <h2
+                style={{
+                  fontSize: "24px",
+                  fontWeight: "600",
+                  marginLeft: "100px",
+                  marginBottom: "50px"
+                }}
+              >
+                Your Playlists
+              </h2>
+              <ContentCardGrid>
                 {data.items.map(item => (
                   <ContentCard
                     square
@@ -31,7 +40,7 @@ export default function Playlist() {
                     linkTo={`/playlist/${item.id}`}
                   />
                 ))}
-              </TopArtistBody>
+              </ContentCardGrid>
             </>
           );
         }}
@@ -39,14 +48,3 @@ export default function Playlist() {
     </MainContentWrapper>
   );
 }
-
-const TopArtistBody = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  @media screen and (min-width: 1000px) {
-    display: flex;
-    width: 80%;
-    margin: 0 auto;
-    flex-wrap: wrap;
-  }
-`;
