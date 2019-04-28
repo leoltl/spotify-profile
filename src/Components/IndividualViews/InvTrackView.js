@@ -94,7 +94,7 @@ export default class InvTrackView extends Component {
             <h4
               style={{
                 margin: " 40px auto",
-                fontSize: "24px",
+                fontSize: "20px",
                 fontWeight: "600",
                 textAlign: "center"
               }}

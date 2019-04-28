@@ -62,6 +62,7 @@ const InvPlaylistViewWrapper = styled.div`
       text-align: center;
       font-size: 14px;
     }
+    margin-bottom: 30px;
   }
   @media screen and (min-width: 1000px) {
     display: grid;
