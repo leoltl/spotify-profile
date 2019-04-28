@@ -6,6 +6,7 @@ import TrackList from "../Common/TrackList";
 import { generateReqHeader, formatComma } from "../../utils";
 import FetchData from "../Common/FetchData";
 import HighlightThreeColumn from "../Common/HighlightThreeColumn";
+import { BarLoader } from "react-spinners";
 
 const Header = styled.div`
   display: flex;
@@ -45,27 +46,26 @@ const Body = styled.div`
 export default class InvArtistView extends Component {
   constructor() {
     super();
-    this.state = { Artist: null, artistsTopTrack: null, Followed: false };
+    this.state = { Artist: {}, Followed: false };
   }
 
-  getArtist = artistId => {
-    fetch(
+  getArtistInfoAndFollowStatus = artistId => {
+    const urlsToFetch = [
       `https://api.spotify.com/v1/artists/${artistId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ Artist: data });
+      `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`
+    ];
+    Promise.all(
+      urlsToFetch.map(url => {
+        return fetch(url, generateReqHeader("GET"))
+          .then(res => res.json())
+          .catch(err => console.log(err));
+      })
+    ).then(parsedResponse => {
+      this.setState({
+        Artist: parsedResponse[0],
+        Followed: parsedResponse[1][0]
       });
-  };
-
-  getFollowStatus = artistId => {
-    fetch(
-      `https://api.spotify.com/v1/me/following/contains?type=artist&ids=${artistId}`,
-      generateReqHeader("GET")
-    )
-      .then(res => res.json())
-      .then(data => this.setState({ Followed: data[0] }));
+    });
   };
 
   followArtist = artistId => {
@@ -77,15 +77,13 @@ export default class InvArtistView extends Component {
   };
 
   componentDidMount() {
-    const id = this.props.match.params.id;
-    this.getArtist(id);
-    this.getFollowStatus(id);
+    this.getArtistInfoAndFollowStatus(this.props.match.params.id);
   }
 
   render() {
     const ArtistId = this.props.match.params.id;
     let { Artist } = this.state;
-    if (Artist) {
+    if (Artist.name) {
       return (
         <MainContentWrapper>
           <Header>
@@ -136,7 +134,13 @@ export default class InvArtistView extends Component {
         </MainContentWrapper>
       );
     } else {
-      return null;
+      return (
+        <MainContentWrapper>
+          <Header>
+            <BarLoader loading sizeUnit={"px"} size={150} color={"#1ed760"} />
+          </Header>
+        </MainContentWrapper>
+      );
     }
   }
 }

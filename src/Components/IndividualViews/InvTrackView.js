@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+
+import FeatureTable from "./FeatureTable";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import Button from "../../UI/Button";
 import theme from "../../UI/theme";
+import { BarLoader } from "react-spinners";
 
 import { generateReqHeader } from "../../utils";
 
@@ -19,7 +22,9 @@ export default class InvTrackView extends Component {
     ];
     Promise.all(
       urlsToFetch.map(url => {
-        return fetch(url, generateReqHeader("GET")).then(res => res.json());
+        return fetch(url, generateReqHeader("GET"))
+          .then(res => res.json())
+          .catch(err => console.error(err));
       })
     ).then(parsedResponses =>
       this.setState({
@@ -30,18 +35,14 @@ export default class InvTrackView extends Component {
     );
   };
 
-  process = prom => {
-    prom.then(parsedData => {
-      return parsedData;
-    });
-  };
-
   componentDidMount() {
     this.getAllTrackDetail(this.props.match.params.id);
   }
 
   render() {
+    console.log(this.state.TrackFeature);
     const { TrackInfo, TrackFeature, TrackAnalysis } = this.state;
+
     return (
       <MainContentWrapper>
         {TrackInfo.album && TrackFeature.id && TrackAnalysis.track ? (
@@ -89,8 +90,13 @@ export default class InvTrackView extends Component {
                 <p>Time Signature</p>
               </div>
             </TrackAnalysisWrapper>
+            <FeatureTable value={TrackFeature} track={TrackInfo} />
           </>
-        ) : null}
+        ) : (
+          <TrackInfoWrapper>
+            <BarLoader loading sizeUnit={"px"} size={150} color={"#1ed760"} />
+          </TrackInfoWrapper>
+        )}
       </MainContentWrapper>
     );
   }
