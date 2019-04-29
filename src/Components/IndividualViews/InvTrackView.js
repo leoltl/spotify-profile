@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import FeatureTable from "./FeatureTable";
+import FeatureTableContainer from "./FeatureTableContainer";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
 import Button from "../../UI/Button";
 import theme from "../../UI/theme";
@@ -101,7 +101,7 @@ export default class InvTrackView extends Component {
             >
               Audio Feature of {TrackInfo.name} by {TrackInfo.artists[0].name}
             </h4>
-            <FeatureTable ids={this.props.match.params.id} />
+            <FeatureTableContainer ids={this.props.match.params.id} />
           </>
         ) : (
           <TrackInfoWrapper>

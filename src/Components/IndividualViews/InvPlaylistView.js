@@ -2,11 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
-import Button from "../../UI/Button";
 import FetchData from "../Common/FetchData";
 import ContentCard from "../Common/ContentCard";
 import TrackList from "../Common/TrackList";
-import FeatureTable from "./FeatureTable";
+import FeatureTableContainer from "./FeatureTableContainer";
 
 const InvPlaylistView = props => {
   return (
@@ -21,9 +20,8 @@ const InvPlaylistView = props => {
           }
           let extractedTracksArray = data.tracks.items.map(item => item.track);
           let extractedTracksId = extractedTracksArray
-            .slice(0, 98)
-            .map(item => item.id)
-            .reduce((accumulator, current) => accumulator + "," + current);
+            .slice(0, 99)
+            .map(item => item.id);
           return (
             <InvPlaylistViewWrapper>
               <div className="left">
@@ -36,10 +34,10 @@ const InvPlaylistView = props => {
                 />
                 <p>{data.description}</p>
                 <p>{data.tracks.items.length} Songs</p>
-                <Button primary>Get Recommendations</Button>
-                <FeatureTable small ids={extractedTracksId} />
+                <FeatureTableContainer small ids={extractedTracksId} />
               </div>
               <div className="right">
+                <h2>Tracks in this playlist</h2>
                 <TrackList render={extractedTracksArray} />
               </div>
             </InvPlaylistViewWrapper>
@@ -52,6 +50,11 @@ const InvPlaylistView = props => {
 export default InvPlaylistView;
 
 const InvPlaylistViewWrapper = styled.div`
+  h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+  }
   margin-top: 50px;
   .left {
     display: flex;
