@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ScrollTop from "./ScrollTop";
 
 import Navigation from "./Navigation";
 import TopTrack from "./DetailTopViews/TopTrack";
@@ -16,17 +17,22 @@ export default class Dashboard extends Component {
       <>
         <Router>
           <Navigation />
-          <Switch>
-            <Route exact path="/" component={Profile} />
-            <Route exact path="/tracks" component={TopTrack} />
-            <Route exact path="/artists" component={TopArtists} />
-            <Route exact path="/playlists" component={Playlist} />
-            <Route path="/artist/:id" component={InvArtistView} />
-            <Route path="/track/:id" component={InvTrackView} />
-            <Route path="/playlist/:id" component={InvPlaylistView} />
-          </Switch>
+          <ScrollTop>
+            <Switch>
+              <Route exact path="/" component={Profile} />
+              <Route exact path="/tracks" component={TopTrack} />
+              <Route exact path="/artists" component={TopArtists} />
+              <Route exact path="/playlists" component={Playlist} />
+              <Route path="/artist/:id" component={InvArtistView} />
+              <Route path="/track/:id" component={InvTrackView} />
+              <Route path="/playlist/:id" component={InvPlaylistView} />
+            </Switch>
+          </ScrollTop>
         </Router>
       </>
     );
   }
+  handlePageChange = () => {
+    window.scrollTo(0, 0);
+  };
 }

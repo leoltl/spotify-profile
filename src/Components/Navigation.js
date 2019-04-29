@@ -85,7 +85,7 @@ const NavIcon = styled.li`
     fill: ${colors.lightGrey};
     height: 40px;
   }
-  &:hover, &:focus {
+  &:hover {
     background:${colors.lightestGrey};
     a {
       color: ${colors.offGreen};
