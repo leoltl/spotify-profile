@@ -41,7 +41,6 @@ export default function RecommendationList(props) {
 }
 
 const RecommendationListWrapper = styled.div`
-  margin: 20px auto 0 auto;
+  margin: 20px auto;
   width: 90%;
-  border: white 1px solid;
 `;

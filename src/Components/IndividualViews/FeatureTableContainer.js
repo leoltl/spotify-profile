@@ -47,15 +47,19 @@ class FeatureTableContainer extends Component {
             }
           />
           {this.state.showRecommendation ? (
-            <Button onClick={this.toggleShowRecommendation}>
-              Hide recommendations
-            </Button>
+            <div className="button">
+              <Button onClick={this.toggleShowRecommendation}>
+                Hide recommendations
+              </Button>
+            </div>
           ) : (
-            <Button onClick={this.toggleShowRecommendation}>
-              {Array.isArray(this.props.ids)
-                ? "Show recommendations based on this playlist"
-                : "Show recommendations based on this song"}
-            </Button>
+            <div className="button">
+              <Button onClick={this.toggleShowRecommendation}>
+                {Array.isArray(this.props.ids)
+                  ? "Show recommendations based on this playlist"
+                  : "Show recommendations based on this song"}
+              </Button>
+            </div>
           )}
         </FeaturetableContainer>
       );
@@ -68,7 +72,7 @@ export default FeatureTableContainer;
 
 const FeaturetableContainer = styled.div`
   margin: 40px auto;
-  button {
+  .button {
     text-align: center;
     margin: 30px auto 0 auto;
   }
