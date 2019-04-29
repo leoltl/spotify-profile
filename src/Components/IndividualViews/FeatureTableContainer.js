@@ -39,10 +39,9 @@ class FeatureTableContainer extends Component {
 
     // Spotify recommendation api only takes max 5 tracks as seed to generate recommendation
     const idsTrimmedString = (Array.isArray(ids)
-      ? ids.slice(0, 6)
+      ? ids.slice(0, 5)
       : [ids]
     ).reduce((accumulator, current) => accumulator + "," + current);
-
     const recommendations = await this.getRecommendation(
       idsTrimmedString,
       featuresOutput
@@ -65,7 +64,7 @@ class FeatureTableContainer extends Component {
           ids: ids
         }
       })
-      .then(data => data.audio_features);
+      .then(res => res.data.audio_features);
   }
 
   getRecommendation(ids, featuresOutput) {

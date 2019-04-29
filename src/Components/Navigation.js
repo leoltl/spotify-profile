@@ -13,6 +13,7 @@ import theme from "../UI/theme";
 const { colors, fontSizes, spacing } = theme;
 
 const NavBar = styled.nav`
+  z-index: 3;
   position: fixed;
   display: flex;
   bottom: 0;

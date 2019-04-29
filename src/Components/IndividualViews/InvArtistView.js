@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { BarLoader } from "react-spinners";
+import { generateReqHeader, formatComma } from "../../utils";
+
 import Button from "../../UI/Button";
 import { MainContentWrapper } from "../../UI/MainContentWrapper";
+
 import TrackList from "../Common/TrackList";
-import { generateReqHeader, formatComma } from "../../utils";
 import FetchData from "../Common/FetchData";
 import HighlightThreeColumn from "../Common/HighlightThreeColumn";
-import { BarLoader } from "react-spinners";
 
 const Header = styled.div`
   display: flex;
