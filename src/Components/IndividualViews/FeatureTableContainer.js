@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import axios from "axios";
+
 import FeatureTable from "./FeatureTable";
 import FeatureTableRecommendation from "./FeatureTableRecommendation";
+
 import Button from "../../UI/Button";
-import { generateReqHeader } from "../../utils";
 import { BarLoader } from "react-spinners";
-import axios from "axios";
 
 class FeatureTableContainer extends Component {
   constructor() {
@@ -27,24 +28,20 @@ class FeatureTableContainer extends Component {
     }
   }
 
-  toggleShowRecommendation = () => {
-    this.setState(prevState => ({
-      showRecommendation: !prevState.showRecommendation
-    }));
-  };
-
   setAudioFeatureAndRecommendations = async ids => {
     const idsString = (Array.isArray(ids) ? ids : [ids]).reduce(
       (accumulator, current) => accumulator + "," + current
     );
-    const idsTrimmedString = (Array.isArray(ids)
-      ? ids.slice(0, 4)
-      : [ids]
-    ).reduce((accumulator, current) => accumulator + "," + current);
 
     const featuresOutput = this.featuresOutput(
       await this.getAudioFeatures(idsString)
     );
+
+    // Spotify recommendation api only takes max 5 tracks as seed to generate recommendation
+    const idsTrimmedString = (Array.isArray(ids)
+      ? ids.slice(0, 6)
+      : [ids]
+    ).reduce((accumulator, current) => accumulator + "," + current);
 
     const recommendations = await this.getRecommendation(
       idsTrimmedString,
@@ -58,17 +55,22 @@ class FeatureTableContainer extends Component {
   };
 
   getAudioFeatures(ids) {
-    return fetch(
-      `https://api.spotify.com/v1/audio-features?ids=${ids}`,
-      generateReqHeader("get")
-    )
-      .then(res => res.json())
+    return axios
+      .get("https://api.spotify.com/v1/audio-features", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`
+        },
+        params: {
+          ids: ids
+        }
+      })
       .then(data => data.audio_features);
   }
 
   getRecommendation(ids, featuresOutput) {
     return axios
-      .get(`https://api.spotify.com/v1/recommendations`, {
+      .get("https://api.spotify.com/v1/recommendations", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("token")}`
@@ -86,11 +88,10 @@ class FeatureTableContainer extends Component {
           market: "CA"
         }
       })
-      .then(res => {
-        return res.data.tracks;
-      });
+      .then(res => res.data.tracks);
   }
 
+  //Map a track's or a list of tracks 's audio feature to a single feature array for rendering feature table
   featuresOutput = ListOfAudioFeature => {
     const FEATURES = [
       "acousticness",
@@ -112,19 +113,30 @@ class FeatureTableContainer extends Component {
     });
   };
 
+  toggleShowRecommendation = () => {
+    this.setState(prevState => ({
+      showRecommendation: !prevState.showRecommendation
+    }));
+  };
+
   render() {
-    if (this.state.featuresOutput && this.state.ListOfRecommendations) {
+    const {
+      featuresOutput,
+      showRecommendation,
+      ListOfRecommendations
+    } = this.state;
+    if (featuresOutput && ListOfRecommendations) {
       return (
         <FeaturetableContainer>
           <FeatureTable
-            featuresOutput={this.state.featuresOutput}
+            featuresOutput={featuresOutput}
             small={this.props.small ? this.props.small : null}
           />
           <FeatureTableRecommendation
-            showRecommendation={this.state.showRecommendation}
-            listOfRecommendations={this.state.ListOfRecommendations}
+            showRecommendation={showRecommendation}
+            listOfRecommendations={ListOfRecommendations}
           />
-          {this.state.showRecommendation ? (
+          {showRecommendation ? (
             <div className="button">
               <Button onClick={this.toggleShowRecommendation}>
                 Hide recommendations
