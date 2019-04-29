@@ -41,6 +41,11 @@ export default class InvTrackView extends Component {
     this.getAllTrackDetail(this.props.match.params.id);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props)
+      this.getAllTrackDetail(this.props.match.params.id);
+  }
+
   render() {
     const { TrackInfo, TrackAnalysis } = this.state;
 
