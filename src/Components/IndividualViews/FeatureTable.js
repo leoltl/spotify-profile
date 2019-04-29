@@ -1,112 +1,84 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-import RecommendationList from "../Common/RecommendationList";
 import theme from "../../UI/theme";
 
 const { colors } = theme;
 
 const FeatureTable = props => {
-  const { showRecommendation, ListOfAudioFeature, ids } = props;
-  let idsStringForRecommendationList = ids
-    .slice(0, 4)
-    .reduce((accumulator, current) => accumulator + "," + current);
-
-  const features = [
-    "acousticness",
-    "danceability",
-    "energy",
-    "instrumentalness",
-    "liveness",
-    "speechiness",
-    "valence"
-  ];
-
-  let featuresOutput = features.map(feature => {
+  const { featuresOutput } = props;
+  if (featuresOutput) {
     return (
-      (ListOfAudioFeature.map(track => track[feature]).reduce(
-        (acc, cur) => acc + cur
-      ) /
-        ListOfAudioFeature.length) *
-      100
+      <>
+        <FeatureTableWrapper smallView={props.small ? props.small : null}>
+          <div
+            style={{
+              width: `${featuresOutput[0]}%`,
+              backgroundColor: "rgba(255, 99, 132, 0.3)",
+              border: "1px solid rgba(255, 99, 132, 1)"
+            }}
+          >
+            <span>Acousticness</span>
+          </div>
+          <div
+            style={{
+              width: `${featuresOutput[1]}%`,
+              backgroundColor: "rgba(255, 159, 64, 0.3)",
+              border: "1px solid rgba(255, 159, 64, 1)"
+            }}
+          >
+            <span>Danceability</span>
+          </div>
+          <div
+            style={{
+              width: `${featuresOutput[2]}%`,
+              backgroundColor: "rgba(255, 206, 86, 0.3)",
+              border: "1px solid rgba(255, 206, 86, 1)"
+            }}
+          >
+            <span>Energy</span>
+          </div>
+          <div
+            style={{
+              width: `${featuresOutput[3]}%`,
+              backgroundColor: "rgba(75, 192, 192, 0.3)",
+              border: "1px solid rgba(75, 192, 192, 1)"
+            }}
+          >
+            <span>Instrumentalness</span>
+          </div>
+          <div
+            style={{
+              width: `${featuresOutput[4]}%`,
+              backgroundColor: "rgba(54, 162, 235, 0.3)",
+              border: "1px solid rgba(54, 162, 235, 1)"
+            }}
+          >
+            <span>Liveness</span>
+          </div>
+          <div
+            style={{
+              width: `${featuresOutput[5]}%`,
+              backgroundColor: "rgba(104, 132, 245, 0.3)",
+              border: "1px solid rgba(104, 132, 245, 1)"
+            }}
+          >
+            <span>Speechiness</span>
+          </div>
+          <div
+            style={{
+              width: `${featuresOutput[6]}%`,
+              backgroundColor: "rgba(153, 102, 255, 0.3)",
+              border: "1px solid rgba(153, 102, 255, 1)"
+            }}
+          >
+            <span>Valence</span>
+          </div>
+        </FeatureTableWrapper>
+      </>
     );
-  });
-
-  return (
-    <>
-      <FeatureTableWrapper smallView={props.small ? props.small : null}>
-        <div
-          style={{
-            width: `${featuresOutput[0]}%`,
-            backgroundColor: "rgba(255, 99, 132, 0.3)",
-            border: "1px solid rgba(255, 99, 132, 1)"
-          }}
-        >
-          <span>Acousticness</span>
-        </div>
-        <div
-          style={{
-            width: `${featuresOutput[1]}%`,
-            backgroundColor: "rgba(255, 159, 64, 0.3)",
-            border: "1px solid rgba(255, 159, 64, 1)"
-          }}
-        >
-          <span>Danceability</span>
-        </div>
-        <div
-          style={{
-            width: `${featuresOutput[2]}%`,
-            backgroundColor: "rgba(255, 206, 86, 0.3)",
-            border: "1px solid rgba(255, 206, 86, 1)"
-          }}
-        >
-          <span>Energy</span>
-        </div>
-        <div
-          style={{
-            width: `${featuresOutput[3]}%`,
-            backgroundColor: "rgba(75, 192, 192, 0.3)",
-            border: "1px solid rgba(75, 192, 192, 1)"
-          }}
-        >
-          <span>Instrumentalness</span>
-        </div>
-        <div
-          style={{
-            width: `${featuresOutput[4]}%`,
-            backgroundColor: "rgba(54, 162, 235, 0.3)",
-            border: "1px solid rgba(54, 162, 235, 1)"
-          }}
-        >
-          <span>Liveness</span>
-        </div>
-        <div
-          style={{
-            width: `${featuresOutput[5]}%`,
-            backgroundColor: "rgba(104, 132, 245, 0.3)",
-            border: "1px solid rgba(104, 132, 245, 1)"
-          }}
-        >
-          <span>Speechiness</span>
-        </div>
-        <div
-          style={{
-            width: `${featuresOutput[6]}%`,
-            backgroundColor: "rgba(153, 102, 255, 0.3)",
-            border: "1px solid rgba(153, 102, 255, 1)"
-          }}
-        >
-          <span>Valence</span>
-        </div>
-      </FeatureTableWrapper>
-      {showRecommendation ? (
-        <RecommendationList
-          featuresVector={featuresOutput}
-          ids={idsStringForRecommendationList}
-        />
-      ) : null}
-    </>
-  );
+  }
+  return null;
 };
 
 export default FeatureTable;

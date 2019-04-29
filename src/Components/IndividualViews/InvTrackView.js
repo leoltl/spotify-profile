@@ -106,7 +106,7 @@ export default class InvTrackView extends Component {
             >
               Audio Feature of {TrackInfo.name} by {TrackInfo.artists[0].name}
             </h4>
-            <FeatureTableContainer ids={this.props.match.params.id} />
+            <FeatureTableContainer ids={TrackInfo.id} />
           </>
         ) : (
           <TrackInfoWrapper>
