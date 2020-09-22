@@ -11,7 +11,7 @@ Spotify-profile app allows you to login to your spotify account, view your favou
 - **Authentication**: Spotify token
 
 ## Live App
-**View this appon [here](https://leoltl-spotify-profile.herokuapp.com)**
+**View this app [here](https://leoltl-spotify-profile.herokuapp.com)**
 
 ## Features
 **As an unauthenticated user**:
