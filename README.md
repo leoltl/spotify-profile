@@ -13,6 +13,8 @@ Spotify-profile app will ask access read permission from your spotify account wi
 
 ## Live App
 **View this app [here](https://leoltl-spotify-profile.herokuapp.com)**
+*The App is hosted on Heroku, it might take some to spin up the deno*
+
 
 ## Features
 **As an unauthenticated user**:
