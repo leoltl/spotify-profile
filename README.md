@@ -1,10 +1,7 @@
 # Spotify-profile
-
-![Spotify-profile](public/screenshot-1.png )
-
 Spotify-profile app allows you to login to your spotify cacount, view your favourite and most played tracks and artists based on your Spotify listening history. Discover song's audio feature and recommendations.
 
-
+![Spotify-profile](public/screenshot-1.png )
 ![Spotify-profile](public/screenshot-2.png )
 ![Spotify-profile](public/screenshot-3.png )
 
